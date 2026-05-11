@@ -1007,6 +1007,7 @@ hr.div{border:none;border-top:1px solid var(--cream);margin:1.4rem 0}
       <div class="dr"><span class="dl">Assured Monthly Pension (50% avg basic)</span><span class="dv xl" id="r-ubase">—</span></div>
       <div class="dr"><span class="dl">Pension + DR at Retirement</span><span class="dv big" id="r-upm">—</span></div>
       <div class="dr"><span class="dl">Family Pension → spouse</span><span class="dv" id="r-ufam">—</span></div>
+       <div class="dr"><span class="dl">Total UPS Corpus Built</span><span class="dv xl" id="r-ucorpus">—</span></div>
       <div class="dr"><span class="dl">UPS Lump Sum (PFRDA formula)</span><span class="dv big" id="r-uls">—</span></div>
       <div class="dr"><span class="dl">Govt Gratuity (separate)</span><span class="dv" id="r-ugrat">—</span></div>
       <div class="dr"><span class="dl">Qualifying Service</span><span class="dv" id="r-usvc">—</span></div>
@@ -1241,6 +1242,7 @@ function calculate(){
   /* ── YEAR-BY-YEAR ── */
   var basic=basicPay0,da=daStart;
   var npsCorpus=0;
+  var upsCorpus=0;
   var totalEmpC=0,totalGovtNPS=0,totalGovtUPS=0;
   var mR=npsRet/12;
   var salRows=[],pcLog=[],last12=[],j;
@@ -1266,6 +1268,7 @@ function calculate(){
     var empM=gross*empC,govNM=gross*govtNPS,govUM=gross*govtUPS;
     totalEmpC+=empM*12;totalGovtNPS+=govNM*12;totalGovtUPS+=govUM*12;
     for(j=0;j<12;j++) npsCorpus=npsCorpus*(1+mR)+(empM+govNM);
+    for(j=0;j<12;j++) upsCorpus=upsCorpus*(1+mR)+(empM+govUM);
     salRows.push({yr:yr,basic:basic,da:da,gross:gross,empM:empM,govNM:govNM,corpus:npsCorpus,
       isPC:pcLog.length>0&&pcLog[pcLog.length-1].year===yr});
     last12.push(basic);
@@ -1417,7 +1420,10 @@ function calculate(){
   }).join('');
 
   /* Detail cards */
-  set('r-corpus',fmt(npsCorpus));set('r-lpct',Math.round(lumPct*100));set('r-apct',Math.round((1-lumPct)*100));
+  set('r-corpus',fmt(npsCorpus));
+  set('r-ucorpus',fmt(upsCorpus));
+  set('r-lpct',Math.round(lumPct*100));
+  set('r-apct',Math.round((1-lumPct)*100));
   set('r-nls',fmt(npsLS));set('r-nac',fmt(npsAC));set('r-npm',fmtM(npsPm));
   set('r-nar',fmtP(annRate*100)+' p.a.');set('r-nec',fmt(totalEmpC));set('r-ngc',fmt(totalGovtNPS));
   set('r-nrr',fmtP(npsRR));document.getElementById('bar-n').style.width=Math.min(npsRR,100)+'%';
