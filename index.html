@@ -1254,6 +1254,7 @@ function calculate(){
       var pcThis=null;
       for(j=0;j<activePCs.length;j++){if(activePCs[j].year===yr){pcThis=activePCs[j];break;}}
       if(pcThis){
+
   var ob=basic;
 
   basic=basic*(1+incrRate/100);
@@ -1269,6 +1270,13 @@ function calculate(){
     ob:ob,
     nb:basic
   });
+
+} else {
+
+  basic=basic*(1+incrRate/100);
+
+  da+=daGrowPP;
+
       }
 
     var gross=basic*(1+da/100);
@@ -1306,8 +1314,9 @@ function calculate(){
 
   /* Inflation adjusted */
   function npsAt(y){return npsPm*Math.pow(1+annGrowPP/100,y);}
-  function upsAt(y){return upsBase*(1+y*drGrowPP/100);}
-
+  function upsAt(y){
+  return upsBase*Math.pow(1+drGrowPP/100,y);
+}
   var irNLS=deflate(npsLS,inflPct,yToRetire);
   var irNp1=deflate(npsAt(1),inflPct,yToRetire+1);
   var irNp10=deflate(npsAt(10),inflPct,yToRetire+10);
