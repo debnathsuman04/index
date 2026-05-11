@@ -3,188 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced UPS vs NPS Calculator | Pay Commission Edition</title>
+    <title>Detailed UPS vs NPS Pension Calculator</title>
     <style>
-        :root { --primary: #1a2a6c; --secondary: #b21f1f; --success: #27ae60; --bg: #f8f9fa; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); margin: 0; padding: 0; color: #333; }
-        header, footer { background: var(--primary); color: white; text-align: center; padding: 2rem 1rem; }
-        .container { max-width: 1100px; margin: -30px auto 40px; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
-        .main-grid { display: grid; grid-template-columns: 350px 1fr; gap: 2rem; }
-        @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
+        /* Keeping your original design language - Professional & Detailed */
+        :root { --primary: #2c3e50; --secondary: #c0392b; --bg: #fdfdfd; }
+        body { font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: #222; }
         
-        .sidebar { background: #f1f3f5; padding: 1.5rem; border-radius: 8px; border: 1px solid #dee2e6; }
-        .input-group { margin-bottom: 1rem; }
-        label { display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.85rem; color: var(--primary); }
-        input { width: 100%; padding: 0.6rem; border: 1px solid #ced4da; border-radius: 4px; box-sizing: border-box; }
+        /* HEADER - Paste your original header code here */
+        header { background: var(--primary); color: white; padding: 25px; text-align: center; border-bottom: 5px solid var(--secondary); }
         
-        .results-area { padding: 1rem; border: 2px solid #eee; border-radius: 8px; }
-        .summary-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-        .summary-table th { background: var(--primary); color: white; padding: 12px; text-align: left; }
-        .summary-table td { padding: 12px; border-bottom: 1px solid #dee2e6; }
+        .main-container { max-width: 1200px; margin: 20px auto; padding: 20px; display: grid; grid-template-columns: 350px 1fr; gap: 30px; }
+        @media (max-width: 900px) { .main-container { grid-template-columns: 1fr; } }
+
+        .input-panel { background: white; padding: 25px; border: 1px solid #ddd; border-radius: 4px; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 13px; color: #444; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 3px; font-size: 14px; }
         
-        .btn-calc { background: var(--secondary); color: white; border: none; padding: 1rem; width: 100%; border-radius: 5px; cursor: pointer; font-weight: 700; font-size: 1.1rem; margin-top: 10px; }
-        .btn-calc:hover { background: #8e1818; }
+        .output-panel { background: white; padding: 25px; border: 1px solid #ddd; }
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
+        .data-table th { background: #f8f9fa; border: 1px solid #dee2e6; padding: 12px; text-align: left; color: var(--primary); }
+        .data-table td { border: 1px solid #dee2e6; padding: 12px; }
         
-        .info-box { margin-top: 2rem; padding: 1.5rem; background: #fffde7; border-left: 5px solid #fbc02d; border-radius: 4px; }
-        .link-bar { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px; }
-        .link-bar a { color: #007bff; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
-        .link-bar a:hover { text-decoration: underline; }
+        .highlight-ups { background: #e8f5e9; font-weight: bold; color: #2e7d32; }
+        .highlight-nps { background: #e3f2fd; font-weight: bold; color: #1565c0; }
         
-        #yearlyTable { display: none; width: 100%; font-size: 0.8rem; margin-top: 1.5rem; border: 1px solid #ddd; }
-        .highlight-row { background: #e8f5e9; font-weight: bold; }
+        .calculate-btn { background: var(--secondary); color: white; border: none; padding: 15px; width: 100%; font-weight: bold; cursor: pointer; border-radius: 3px; margin-top: 10px; text-transform: uppercase; }
+        
+        .official-links { margin-top: 30px; padding: 20px; background: #f1f3f5; border-radius: 4px; }
+        .official-links a { color: #0056b3; text-decoration: none; font-weight: 600; margin-right: 20px; font-size: 13px; }
+
+        /* FOOTER - Paste your original footer code here */
+        footer { background: #34495e; color: white; text-align: center; padding: 20px; margin-top: 40px; font-size: 13px; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Retirement & Pension Analysis</h1>
-    <p>Unified Pension Scheme (UPS) vs National Pension System (NPS)</p>
+    <h1>Government Pension Comparison Portal</h1>
+    <p>Detailed Analysis: Unified Pension Scheme vs National Pension System</p>
 </header>
 
-<div class="container">
-    <div class="main-grid">
-        <div class="sidebar">
-            <h3>Salary Details</h3>
-            <div class="input-group">
-                <label>Current Basic Pay (7th CPC) (₹)</label>
-                <input type="number" id="basic" value="50000">
-            </div>
-            <div class="input-group">
-                <label>Current DA (%)</label>
-                <input type="number" id="da" value="50">
-            </div>
-            <div class="input-group">
-                <label>Years to Retirement</label>
-                <input type="number" id="years" value="20">
-            </div>
-            <div class="input-group">
-                <label>Pay Commission Cycle (Years)</label>
-                <input type="number" id="cpcCycle" value="10">
-            </div>
-            <div class="input-group">
-                <label>Avg. Inflation Rate (%)</label>
-                <input type="number" id="inf" value="6">
-            </div>
-            <div class="input-group">
-                <label>Annual Increment (%)</label>
-                <input type="number" id="inc" value="3">
-            </div>
-            <button class="btn-calc" onclick="calculate()">Analyze My Pension</button>
+<div class="main-container">
+    <!-- Input Section -->
+    <div class="input-panel">
+        <h3 style="border-bottom: 2px solid var(--secondary); padding-bottom: 10px;">Service Inputs</h3>
+        
+        <div class="input-group">
+            <label>Year of Joining Service</label>
+            <input type="number" id="joinYear" value="2015">
         </div>
+        <div class="input-group">
+            <label>Year of Retirement</label>
+            <input type="number" id="retireYear" value="2045">
+        </div>
+        <div class="input-group">
+            <label>Current Basic Pay (₹)</label>
+            <input type="number" id="basicPay" value="50000">
+        </div>
+        <div class="input-group">
+            <label>Current Pay Commission</label>
+            <select id="cpcSelect">
+                <option value="7">7th Pay Commission (Current)</option>
+                <option value="8">8th Pay Commission (Upcoming 2026)</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label>Annual Increment (%)</label>
+            <input type="number" id="incRate" value="3">
+        </div>
+        <div class="input-group">
+            <label>Avg. Inflation Rate (%)</label>
+            <input type="number" id="infRate" value="6">
+        </div>
+        <div class="input-group">
+            <label>NPS Expected Growth (%)</label>
+            <input type="number" id="npsRate" value="10">
+        </div>
+        
+        <button class="calculate-btn" onclick="calculateDetailedPension()">Run Comprehensive Analysis</button>
+    </div>
 
-        <div class="results-area">
-            <h3 id="resHeader">Comparison Dashboard</h3>
-            <div id="summary">
-                <table class="summary-table">
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>UPS (Assured)</th>
-                            <th>NPS (Market)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="resBody">
-                        <tr><td colspan="3" style="text-align:center;">Enter values and click calculate.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="info-box">
-                <h4>Official Resources & History</h4>
-                <p>The <strong>Unified Pension Scheme (UPS)</strong> ensures 50% of the average basic pay of the last 12 months as pension, plus inflation-linked Dearness Relief (DR). <strong>NPS</strong> is market-linked and depends on your accumulated corpus.</p>
-                <div class="link-bar">
-                    <a href="https://pib.gov.in/PressReleasePage.aspx?PRID=2048607" target="_blank">PIB: UPS Details</a>
-                    <a href="https://en.wikipedia.org/wiki/National_Pension_System" target="_blank">NPS Wiki</a>
-                    <a href="https://pensionersportal.gov.in/" target="_blank">Pensioners' Portal</a>
-                    <a href="https://npscra.nsdl.co.in/" target="_blank">NSDL NPS Portal</a>
-                </div>
-            </div>
-
-            <div style="text-align:center; margin-top:1rem;">
-                <button style="background:none; border:1px solid #ccc; padding:5px 10px; cursor:pointer;" onclick="toggleYearly()">Show/Hide Yearly Simulation</button>
-            </div>
-            <table id="yearlyTable" class="summary-table">
+    <!-- Results Section -->
+    <div class="output-panel">
+        <h3>Consolidated Pension Summary</h3>
+        <div id="summaryDashboard">
+            <table class="data-table">
                 <thead>
-                    <tr style="background:#eee;">
-                        <th>Year</th>
-                        <th>Event</th>
-                        <th>Basic (₹)</th>
-                        <th>DA %</th>
-                        <th>Total Monthly (₹)</th>
+                    <tr>
+                        <th>Metric</th>
+                        <th>UPS (Assured Benefit)</th>
+                        <th>NPS (Investment Based)</th>
                     </tr>
                 </thead>
-                <tbody id="yearlyBody"></tbody>
+                <tbody id="comparisonBody">
+                    <tr><td colspan="3" style="text-align:center; padding:40px;">Please enter your service details and click calculate.</td></tr>
+                </tbody>
             </table>
         </div>
+
+        <div class="official-links">
+            <strong>Policy Documentation:</strong><br><br>
+            <a href="https://pib.gov.in/PressReleasePage.aspx?PRID=2048607" target="_blank">UPS Cabinet Approval (PIB)</a>
+            <a href="https://en.wikipedia.org/wiki/National_Pension_System" target="_blank">Wiki: NPS History</a>
+            <a href="https://pensionersportal.gov.in/" target="_blank">Pensioners' Portal</a>
+        </div>
+
+        <h3 style="margin-top:40px;">Detailed Year-by-Year Pay Commission Simulation</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Basic Pay (₹)</th>
+                    <th>DA (%)</th>
+                    <th>Total Monthly</th>
+                    <th>NPS Corpus (Accumulated)</th>
+                </tr>
+            </thead>
+            <tbody id="yearlyTableBody"></tbody>
+        </table>
     </div>
 </div>
 
 <footer>
-    <p>&copy; 2026 Retirement Planning Portal | Built for Civil Service Professionals</p>
+    <p>&copy; 2026 Pension Calculator | Dedicated to Transparency in Retirement Benefits</p>
 </footer>
 
 <script>
-    function toggleYearly() {
-        const t = document.getElementById('yearlyTable');
-        t.style.display = t.style.display === 'table' ? 'none' : 'table';
-    }
-
-    function calculate() {
-        let curBasic = parseFloat(document.getElementById('basic').value);
-        let curDA = parseFloat(document.getElementById('da').value);
-        const years = parseInt(document.getElementById('years').value);
-        const cycle = parseInt(document.getElementById('cpcCycle').value);
-        const inc = parseFloat(document.getElementById('inc').value) / 100;
-        const inf = parseFloat(document.getElementById('inf').value) / 100;
+    function calculateDetailedPension() {
+        const joinYear = parseInt(document.getElementById('joinYear').value);
+        const retireYear = parseInt(document.getElementById('retireYear').value);
+        const currentYear = 2026;
+        const totalYearsLeft = retireYear - currentYear;
+        
+        let basic = parseFloat(document.getElementById('basicPay').value);
+        let da = 50; // Current approx DA
+        const inc = parseFloat(document.getElementById('incRate').value) / 100;
+        const inf = parseFloat(document.getElementById('infRate').value) / 100;
+        const npsR = parseFloat(document.getElementById('npsRate').value) / 100;
 
         let npsCorpus = 0;
-        let yearlyRows = "";
+        let yearlyHtml = "";
 
-        for (let i = 1; i <= years; i++) {
-            let event = "Normal";
-            // Check for Pay Commission Merger (e.g., Year 1 for 8th CPC, Year 11 for 9th)
-            if (i % cycle === 1) {
-                curBasic = curBasic * (1 + (curDA / 100));
-                curDA = 0;
-                event = "<b>Pay Commission Merger</b>";
+        for (let y = currentYear; y <= retireYear; y++) {
+            // Pay Commission Logic: DA merges into basic every 10 years (2026, 2036, etc.)
+            if ((y - 2006) % 10 === 0 || y === 2026) {
+                basic = basic + (basic * (da / 100));
+                da = 0;
             } else {
-                curBasic = curBasic * (1 + inc);
-                curDA += 6; // Approx annual DA increase
+                basic = basic * (1 + inc);
+                da += 6; // Typical 6% annual DA increase
             }
 
-            let monthlyTotal = curBasic * (1 + (curDA / 100));
-            npsCorpus = (npsCorpus + (monthlyTotal * 0.24 * 12)) * 1.09; // 9% return assumption
+            let monthlyEmoluments = basic + (basic * da / 100);
+            let npsContribution = monthlyEmoluments * 0.24; // 10% self + 14% govt
+            npsCorpus = (npsCorpus + (npsContribution * 12)) * (1 + npsR);
 
-            yearlyRows += `<tr class="${i%cycle===1 ? 'highlight-row':''}">
-                <td>${i}</td>
-                <td>${event}</td>
-                <td>₹${Math.round(curBasic).toLocaleString()}</td>
-                <td>${curDA}%</td>
-                <td>₹${Math.round(monthlyTotal).toLocaleString()}</td>
+            yearlyHtml += `<tr>
+                <td>${y}</td>
+                <td>₹${Math.round(basic).toLocaleString()}</td>
+                <td>${da}%</td>
+                <td>₹${Math.round(monthlyEmoluments).toLocaleString()}</td>
+                <td>₹${Math.round(npsCorpus).toLocaleString()}</td>
             </tr>`;
         }
 
-        // UPS logic: 50% of last Basic
-        const upsNominal = curBasic * 0.5;
-        const upsLump = (curBasic * (1 + curDA/100) / 10) * (years * 2);
-
-        // NPS logic: 6% annuity on 40% corpus
-        const npsPension = (npsCorpus * 0.4 * 0.055) / 12;
+        // Final Calculations
+        const upsPensionNominal = basic * 0.5;
+        const upsLump = ((basic + (basic * da / 100)) / 10) * ((retireYear - joinYear) * 2);
+        
         const npsLump = npsCorpus * 0.6;
+        const npsPensionNominal = (npsCorpus * 0.4 * 0.06) / 12;
 
-        // Inflation adjustment
-        const pvFactor = Math.pow(1 + inf, years);
-        const upsReal = upsNominal / pvFactor;
-        const npsReal = npsPension / pvFactor;
+        // Inflation Adjustment (Purchasing Power)
+        const pvFactor = Math.pow(1 + inf, totalYearsLeft);
+        const upsReal = upsPensionNominal / pvFactor;
+        const npsReal = npsPensionNominal / pvFactor;
 
-        document.getElementById('resBody').innerHTML = `
-            <tr><td>Monthly Pension (Future)</td><td>₹${Math.round(upsNominal).toLocaleString()}</td><td>₹${Math.round(npsPension).toLocaleString()}</td></tr>
-            <tr style="background:#e3f2fd;"><td><b>Real Value (Today's Terms)</b></td><td><b>₹${Math.round(upsReal).toLocaleString()}</b></td><td><b>₹${Math.round(npsReal).toLocaleString()}</b></td></tr>
-            <tr><td>Lumpsum at Retirement</td><td>₹${Math.round(upsLump).toLocaleString()}</td><td>₹${Math.round(npsLump).toLocaleString()}</td></tr>
-            <tr><td>Inflation Indexed?</td><td>Yes (via Dearness Relief)</td><td>No (Fixed Annuity)</td></tr>
+        // Update Dashboard
+        document.getElementById('comparisonBody').innerHTML = `
+            <tr><td>Monthly Pension (Nominal)</td><td class="highlight-ups">₹${Math.round(upsPensionNominal).toLocaleString()}</td><td class="highlight-nps">₹${Math.round(npsPensionNominal).toLocaleString()}</td></tr>
+            <tr><td><b>Purchasing Power (In Today's ₹)</b></td><td class="highlight-ups">₹${Math.round(upsReal).toLocaleString()}</td><td class="highlight-nps">₹${Math.round(npsReal).toLocaleString()}</td></tr>
+            <tr><td>Retirement Lumpsum</td><td>₹${Math.round(upsLump).toLocaleString()}</td><td>₹${Math.round(npsLump).toLocaleString()}</td></tr>
+            <tr><td>Dearness Relief (Inflation Protection)</td><td>Guaranteed</td><td>Market Linked</td></tr>
         `;
-        document.getElementById('yearlyBody').innerHTML = yearlyRows;
+        document.getElementById('yearlyTableBody').innerHTML = yearlyHtml;
     }
 </script>
+
 </body>
 </html>
