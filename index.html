@@ -1,195 +1,1577 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detailed UPS vs NPS Pension Calculator</title>
-    <style>
-        /* Keeping your original design language - Professional & Detailed */
-        :root { --primary: #2c3e50; --secondary: #c0392b; --bg: #fdfdfd; }
-        body { font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: #222; }
-        
-        /* HEADER - Paste your original header code here */
-        header { background: var(--primary); color: white; padding: 25px; text-align: center; border-bottom: 5px solid var(--secondary); }
-        
-        .main-container { max-width: 1200px; margin: 20px auto; padding: 20px; display: grid; grid-template-columns: 350px 1fr; gap: 30px; }
-        @media (max-width: 900px) { .main-container { grid-template-columns: 1fr; } }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>NPS vs UPS Pension Calculator — India</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════════ */
+:root{
+  --navy:#0d1f35;
+  --navy2:#162d4a;
+  --navy3:#1e3d63;
+  --parch:#f0ebe0;
+  --cream:#e8e0d0;
+  --white:#ffffff;
+  --gold:#c9932a;
+  --gold2:#e0b04a;
+  --goldfaint:#fdf5e4;
+  --nps:#1a3a6b;
+  --npsmid:#2558a0;
+  --npsfaint:#e8f0fb;
+  --ups:#165a2f;
+  --upsmid:#217a42;
+  --upsfaint:#e4f2eb;
+  --ink:#1a1a2a;
+  --muted:#6b6878;
+  --border:#d5cdc0;
+  --mono:'DM Mono',monospace;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Lato',sans-serif;
+}
 
-        .input-panel { background: white; padding: 25px; border: 1px solid #ddd; border-radius: 4px; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); }
-        .input-group { margin-bottom: 15px; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 13px; color: #444; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 3px; font-size: 14px; }
-        
-        .output-panel { background: white; padding: 25px; border: 1px solid #ddd; }
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
-        .data-table th { background: #f8f9fa; border: 1px solid #dee2e6; padding: 12px; text-align: left; color: var(--primary); }
-        .data-table td { border: 1px solid #dee2e6; padding: 12px; }
-        
-        .highlight-ups { background: #e8f5e9; font-weight: bold; color: #2e7d32; }
-        .highlight-nps { background: #e3f2fd; font-weight: bold; color: #1565c0; }
-        
-        .calculate-btn { background: var(--secondary); color: white; border: none; padding: 15px; width: 100%; font-weight: bold; cursor: pointer; border-radius: 3px; margin-top: 10px; text-transform: uppercase; }
-        
-        .official-links { margin-top: 30px; padding: 20px; background: #f1f3f5; border-radius: 4px; }
-        .official-links a { color: #0056b3; text-decoration: none; font-weight: 600; margin-right: 20px; font-size: 13px; }
+/* ═══════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════ */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--parch);
+  color:var(--ink);
+  line-height:1.65;
+  font-size:15px;
+  min-height:100vh;
+}
 
-        /* FOOTER - Paste your original footer code here */
-        footer { background: #34495e; color: white; text-align: center; padding: 20px; margin-top: 40px; font-size: 13px; }
-    </style>
+/* grain texture overlay */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.4;
+}
+
+/* ═══════════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════════ */
+.hdr{
+  background:var(--navy);
+  position:relative;overflow:hidden;
+  padding:0;
+}
+.hdr-inner{
+  position:relative;z-index:2;
+  padding:3rem 2rem 2.5rem;
+  text-align:center;
+  max-width:880px;margin:0 auto;
+}
+/* Ashoka Chakra watermark */
+.hdr::after{
+  content:'☸';
+  position:absolute;
+  right:-30px;top:50%;transform:translateY(-50%);
+  font-size:380px;line-height:1;
+  color:rgba(255,255,255,.022);
+  pointer-events:none;z-index:1;
+  user-select:none;
+}
+/* diagonal gold accent line */
+.hdr::before{
+  content:'';
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:3px;
+  background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent);
+}
+.hdr-kicker{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;
+  font-weight:700;color:var(--gold2);
+  margin-bottom:1.2rem;
+}
+.hdr-kicker::before,.hdr-kicker::after{
+  content:'';display:block;
+  width:28px;height:1px;background:var(--gold);opacity:.6;
+}
+.hdr h1{
+  font-family:var(--serif);
+  font-size:clamp(2rem,5vw,3.2rem);
+  font-weight:600;
+  color:var(--white);
+  letter-spacing:.02em;
+  line-height:1.2;
+  margin-bottom:.7rem;
+}
+.hdr-sub{
+  font-size:.8rem;
+  color:rgba(255,255,255,.45);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  font-weight:300;
+}
+.hdr-pills{
+  display:flex;justify-content:center;flex-wrap:wrap;gap:.5rem;
+  margin-top:1.4rem;
+}
+.hdr-pill{
+  font-size:.67rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+  border:1px solid rgba(201,147,42,.4);
+  color:rgba(255,255,255,.55);
+  padding:.18rem .8rem;border-radius:20px;
+}
+
+/* ═══════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════ */
+.wrap{
+  max-width:980px;margin:0 auto;
+  padding:2.5rem 1.5rem;
+  position:relative;z-index:1;
+}
+
+/* section number badge */
+.sec-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:26px;height:26px;border-radius:50%;
+  background:var(--navy);color:var(--white);
+  font-size:.72rem;font-weight:700;flex-shrink:0;
+  font-family:var(--mono);
+}
+
+/* ═══════════════════════════════════════════════
+   CARDS — INPUT
+═══════════════════════════════════════════════ */
+.card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1.8rem 2rem;
+  margin-bottom:1.6rem;
+  box-shadow:0 1px 3px rgba(13,31,53,.04),0 4px 16px rgba(13,31,53,.06);
+  position:relative;overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;bottom:0;
+  width:3px;
+  background:linear-gradient(180deg,var(--gold2),var(--gold));
+  border-radius:3px 0 0 3px;
+}
+.card.blue-accent::before{background:linear-gradient(180deg,#4a85cc,var(--nps))}
+.card.green-accent::before{background:linear-gradient(180deg,#3aaa6a,var(--ups))}
+.card.gray-accent::before{background:linear-gradient(180deg,#aaa,#777)}
+
+.card-hdr{
+  display:flex;align-items:center;gap:.75rem;
+  margin-bottom:1.4rem;padding-bottom:1rem;
+  border-bottom:1px solid var(--cream);
+}
+.card-title{
+  font-family:var(--serif);
+  font-size:1.15rem;font-weight:600;
+  letter-spacing:.01em;
+}
+.card-sub{font-size:.75rem;color:var(--muted);margin-top:.1rem}
+
+/* ═══════════════════════════════════════════════
+   FORM FIELDS
+═══════════════════════════════════════════════ */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1rem}
+@media(max-width:680px){.g2,.g3,.g4{grid-template-columns:1fr}}
+@media(min-width:681px) and (max-width:860px){.g3,.g4{grid-template-columns:1fr 1fr}}
+
+.fld{display:flex;flex-direction:column;gap:.32rem}
+.fld label{
+  font-size:.68rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.12em;
+  color:var(--muted);
+}
+.fld label em{
+  font-style:normal;font-weight:400;text-transform:none;
+  letter-spacing:0;color:#bbb;font-size:.65rem;margin-left:.3rem;
+}
+.fld input,.fld select{
+  border:1.5px solid var(--border);border-radius:5px;
+  padding:.58rem .9rem;
+  font-family:var(--mono);font-size:.9rem;
+  background:var(--parch);color:var(--ink);
+  width:100%;
+  transition:border-color .2s,box-shadow .2s,background .2s;
+}
+.fld input:focus,.fld select:focus{
+  outline:none;
+  border-color:var(--gold);
+  background:var(--white);
+  box-shadow:0 0 0 3px rgba(201,147,42,.13);
+}
+.fld .hint{
+  font-size:.66rem;color:#b8ae9e;
+  line-height:1.45;
+}
+
+/* ═══════════════════════════════════════════════
+   INFO BOX
+═══════════════════════════════════════════════ */
+.infobox{
+  background:var(--goldfaint);
+  border:1px solid #e8d090;
+  border-left:3px solid var(--gold);
+  border-radius:0 5px 5px 0;
+  padding:.85rem 1.1rem;
+  font-size:.82rem;color:#3a2c00;
+  line-height:1.7;margin-bottom:1.2rem;
+}
+.infobox strong{color:var(--gold)}
+
+/* ═══════════════════════════════════════════════
+   PAY COMMISSION TABLE
+═══════════════════════════════════════════════ */
+.presets{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.9rem}
+.pbtn{
+  font-size:.7rem;
+  background:var(--parch);border:1px solid var(--border);
+  border-radius:20px;padding:.22rem .8rem;
+  cursor:pointer;font-family:var(--sans);color:var(--muted);
+  transition:all .18s;white-space:nowrap;
+}
+.pbtn:hover{background:var(--goldfaint);border-color:var(--gold);color:var(--navy)}
+
+.pc-scroll{overflow-x:auto;border-radius:6px;border:1px solid var(--border)}
+.pct{width:100%;border-collapse:collapse;font-size:.83rem;min-width:520px}
+.pct thead th{
+  background:var(--navy);color:rgba(255,255,255,.85);
+  padding:.55rem 1rem;text-align:left;
+  font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+  white-space:nowrap;
+}
+.pct thead th:first-child{width:40px;text-align:center}
+.pct tbody td{
+  padding:.45rem .9rem;
+  border-bottom:1px solid var(--cream);
+}
+.pct tbody tr:last-child td{border-bottom:none}
+.pct tbody tr:nth-child(odd) td{background:#fdfaf6}
+.pct tbody tr:nth-child(even) td{background:var(--white)}
+.pct tbody tr:hover td{background:var(--goldfaint)}
+.pct input{
+  border:1px solid var(--border);border-radius:4px;
+  padding:.3rem .6rem;
+  font-family:var(--mono);font-size:.82rem;
+  background:var(--white);width:100%;
+  transition:border-color .15s;
+}
+.pct input:focus{outline:none;border-color:var(--gold)}
+.tnum{text-align:center;color:var(--muted);font-family:var(--mono);font-size:.78rem}
+.del-btn{
+  background:none;border:1.5px solid #ddd;border-radius:4px;
+  color:#ccc;cursor:pointer;padding:.22rem .52rem;
+  font-size:.75rem;line-height:1;transition:all .18s;
+}
+.del-btn:hover{border-color:#c44;color:#c44;background:#fff5f5}
+
+.add-pc-btn{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.78rem;color:var(--gold);
+  border:1.5px dashed rgba(201,147,42,.5);
+  background:none;padding:.38rem 1rem;border-radius:20px;
+  cursor:pointer;margin-top:.8rem;font-family:var(--sans);font-weight:700;
+  transition:all .18s;letter-spacing:.05em;
+}
+.add-pc-btn:hover{background:var(--goldfaint);border-color:var(--gold)}
+
+hr.div{border:none;border-top:1px solid var(--cream);margin:1.4rem 0}
+
+/* ═══════════════════════════════════════════════
+   CALCULATE BUTTON
+═══════════════════════════════════════════════ */
+.go-btn{
+  display:flex;align-items:center;justify-content:center;gap:.7rem;
+  width:100%;padding:1.1rem 2rem;
+  background:linear-gradient(135deg,var(--navy),var(--navy3));
+  color:var(--white);border:none;border-radius:8px;
+  font-family:var(--serif);font-size:1.25rem;font-weight:600;
+  letter-spacing:.04em;cursor:pointer;
+  box-shadow:0 4px 20px rgba(13,31,53,.25);
+  transition:all .2s;margin-top:1.4rem;
+  position:relative;overflow:hidden;
+}
+.go-btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
+  transform:translateX(-100%);transition:transform .5s;
+}
+.go-btn:hover{
+  background:linear-gradient(135deg,var(--navy2),var(--navy3));
+  box-shadow:0 6px 28px rgba(13,31,53,.35);
+  transform:translateY(-1px);
+}
+.go-btn:hover::after{transform:translateX(100%)}
+.go-btn:active{transform:translateY(0)}
+.go-btn-icon{font-size:1.3rem}
+
+/* ═══════════════════════════════════════════════
+   ERROR
+═══════════════════════════════════════════════ */
+.errbox{
+  background:#fff5f5;border:1.5px solid #e0aaaa;
+  border-radius:6px;padding:.9rem 1.1rem;
+  color:#8b1a1a;font-size:.85rem;
+  margin-bottom:1rem;display:none;
+  line-height:1.6;
+}
+
+/* ═══════════════════════════════════════════════
+   RESULTS — FADE IN
+═══════════════════════════════════════════════ */
+#res{display:none}
+.fade-in{animation:fadeUp .55s ease both}
+.fade-in-2{animation:fadeUp .55s .1s ease both}
+.fade-in-3{animation:fadeUp .55s .2s ease both}
+.fade-in-4{animation:fadeUp .55s .3s ease both}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ═══════════════════════════════════════════════
+   VERDICT
+═══════════════════════════════════════════════ */
+.verdict{
+  border-radius:10px;
+  padding:2.5rem 2.5rem 2rem;
+  margin-bottom:1.8rem;
+  position:relative;overflow:hidden;
+}
+.verdict.vn{background:linear-gradient(135deg,#0d2545 0%,#1a3a6b 60%,#1e4a88 100%)}
+.verdict.vu{background:linear-gradient(135deg,#0b2d18 0%,#165a2f 60%,#1e7040 100%)}
+.verdict.vt{background:linear-gradient(135deg,#1a1a2a 0%,#2a2a3a 60%,#3a3a4a 100%)}
+.verdict::before{
+  content:'';position:absolute;
+  right:-80px;bottom:-80px;
+  width:350px;height:350px;border-radius:50%;
+  background:rgba(255,255,255,.035);
+}
+.verdict::after{
+  content:'';position:absolute;
+  right:60px;top:-40px;
+  width:180px;height:180px;border-radius:50%;
+  background:rgba(255,255,255,.02);
+}
+.v-eyebrow{
+  font-size:.62rem;font-weight:700;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--gold2);
+  display:flex;align-items:center;gap:.6rem;
+  margin-bottom:.9rem;
+}
+.v-eyebrow::before{
+  content:'';display:block;
+  width:20px;height:1px;background:var(--gold2);opacity:.7;
+}
+.v-head{
+  font-family:var(--serif);
+  font-size:clamp(1.6rem,3.5vw,2.4rem);
+  font-weight:600;color:var(--white);
+  line-height:1.25;margin-bottom:1.8rem;
+  letter-spacing:.01em;
+}
+
+/* KPI grid */
+.v-kpis{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:1rem;margin-bottom:1.8rem;
+}
+.kpi{
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:8px;padding:1rem 1.1rem;
+  backdrop-filter:blur(6px);
+  transition:background .2s;
+}
+.kpi:hover{background:rgba(255,255,255,.13)}
+.kl{
+  font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;
+  color:rgba(255,255,255,.6);margin-bottom:.35rem;font-weight:700;
+}
+.kv{
+  font-family:var(--mono);font-size:1.2rem;
+  font-weight:500;color:var(--white);
+  transition:all .3s;
+}
+.ks{font-size:.68rem;color:rgba(255,255,255,.5);margin-top:.15rem}
+
+/* VS bar inside verdict */
+.vs-bar-wrap{margin-bottom:1.6rem}
+.vs-label{
+  display:flex;justify-content:space-between;
+  font-size:.72rem;color:rgba(255,255,255,.6);
+  margin-bottom:.5rem;font-family:var(--mono);
+}
+.vs-track{
+  height:10px;background:rgba(255,255,255,.1);
+  border-radius:6px;overflow:visible;position:relative;
+  display:flex;
+}
+.vs-nps{height:100%;border-radius:6px 0 0 6px;background:rgba(100,160,240,.7);transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.vs-ups{height:100%;border-radius:0 6px 6px 0;background:rgba(80,200,130,.7);transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.vs-mid{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-size:.6rem;color:rgba(255,255,255,.5);letter-spacing:.08em;
+  white-space:nowrap;text-transform:uppercase;font-weight:700;
+}
+
+.v-note{
+  font-size:.8rem;color:rgba(255,255,255,.58);
+  border-top:1px solid rgba(255,255,255,.12);
+  padding-top:1rem;line-height:1.7;
+}
+
+/* ═══════════════════════════════════════════════
+   PLAIN ENGLISH
+═══════════════════════════════════════════════ */
+.plain{
+  background:linear-gradient(135deg,var(--goldfaint),#fff9f0);
+  border:1.5px solid #e0c878;
+  border-radius:8px;
+  padding:1.6rem 2rem;
+  margin-bottom:1.8rem;
+  position:relative;overflow:hidden;
+}
+.plain::before{
+  content:'';position:absolute;top:-1px;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold));
+}
+.plain h3{
+  font-family:var(--serif);font-size:1.2rem;font-weight:600;
+  color:var(--navy);margin-bottom:.9rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+.plain p,.plain li{
+  font-size:.88rem;color:#3a2c00;line-height:1.85;
+}
+.plain ul{margin:.5rem 0 0 1.3rem}
+.plain li{margin-bottom:.35rem}
+.hl{
+  background:rgba(201,147,42,.15);
+  border-radius:3px;padding:.04rem .35rem;
+  font-weight:700;color:#5a3e00;font-family:var(--mono);
+}
+
+/* ═══════════════════════════════════════════════
+   SALARY JOURNEY TIMELINE
+═══════════════════════════════════════════════ */
+.timeline{
+  position:relative;
+  padding:1.2rem 0 .5rem 0;
+  display:flex;flex-wrap:wrap;gap:0;align-items:flex-start;
+}
+.tl-item{
+  display:flex;flex-direction:column;align-items:center;
+  flex:1 1 140px;position:relative;
+  text-align:center;padding:.3rem .5rem;
+}
+.tl-item:not(:last-child)::after{
+  content:'';position:absolute;
+  top:18px;left:calc(50% + 18px);right:calc(-50% + 18px);
+  height:2px;
+  background:linear-gradient(90deg,var(--border),var(--border));
+}
+.tl-item.pc-item:not(:last-child)::after{
+  background:linear-gradient(90deg,var(--gold),rgba(201,147,42,.3));
+}
+.tl-dot{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;margin-bottom:.5rem;
+  border:2px solid;flex-shrink:0;
+  background:var(--white);position:relative;z-index:1;
+}
+.tl-item.start-item .tl-dot{
+  border-color:var(--navy);background:var(--navy);color:var(--white);
+}
+.tl-item.pc-item .tl-dot{
+  border-color:var(--gold);background:var(--goldfaint);color:var(--gold);
+  box-shadow:0 0 0 4px rgba(201,147,42,.15);
+}
+.tl-item.end-item .tl-dot{
+  border-color:var(--npsmid);background:var(--npsmid);color:var(--white);
+}
+.tl-year{
+  font-family:var(--mono);font-size:.75rem;font-weight:500;
+  color:var(--muted);margin-bottom:.2rem;
+}
+.tl-name{
+  font-size:.73rem;font-weight:700;color:var(--ink);
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.tl-val{
+  font-family:var(--mono);font-size:.82rem;font-weight:500;
+  color:var(--navy);margin-top:.15rem;
+}
+.tl-sub{font-size:.65rem;color:var(--muted);margin-top:.1rem}
+.tl-item.pc-item .tl-name{color:var(--gold)}
+.tl-item.pc-item .tl-val{color:var(--gold)}
+
+/* ═══════════════════════════════════════════════
+   RESULT SECTION HEADERS
+═══════════════════════════════════════════════ */
+.res-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1.8rem 2rem;
+  margin-bottom:1.6rem;
+  box-shadow:0 1px 3px rgba(13,31,53,.04),0 4px 16px rgba(13,31,53,.05);
+}
+.res-card-hdr{
+  display:flex;align-items:center;gap:.75rem;
+  margin-bottom:1.4rem;padding-bottom:1rem;
+  border-bottom:1px solid var(--cream);
+}
+.rch-title{font-family:var(--serif);font-size:1.1rem;font-weight:600}
+
+/* ═══════════════════════════════════════════════
+   NPS vs UPS DETAIL SIDE BY SIDE
+═══════════════════════════════════════════════ */
+.two-col{
+  display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;
+  margin-bottom:1.6rem;
+}
+@media(max-width:640px){.two-col{grid-template-columns:1fr}}
+
+.dc{border-radius:8px;padding:1.6rem;border:2px solid;overflow:hidden;position:relative}
+.dc.dn{
+  background:linear-gradient(160deg,#0d2545 0%,#1a3a6b 100%);
+  border-color:#1a3a6b;color:var(--white);
+}
+.dc.du{
+  background:linear-gradient(160deg,#0b2d18 0%,#165a2f 100%);
+  border-color:#165a2f;color:var(--white);
+}
+.dc::before{
+  content:'';position:absolute;bottom:-40px;right:-40px;
+  width:160px;height:160px;border-radius:50%;
+  background:rgba(255,255,255,.04);
+}
+.dc h3{
+  font-family:var(--serif);font-size:1.1rem;
+  padding-bottom:.7rem;margin-bottom:.8rem;
+  border-bottom:1px solid rgba(255,255,255,.15);
+}
+.dr{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.06);
+  font-size:.83rem;gap:.5rem;
+}
+.dr:last-of-type{border-bottom:none}
+.dl{opacity:.68;flex:1}
+.dv{font-family:var(--mono);font-weight:500;text-align:right;white-space:nowrap;font-size:.88rem}
+.dv.big{font-family:var(--serif);font-size:1.2rem;font-weight:600}
+.dv.xl{font-family:var(--serif);font-size:1.45rem;font-weight:700;color:#ffe}
+.pbar{margin-top:1rem}
+.pbar-row{display:flex;justify-content:space-between;font-size:.68rem;opacity:.75;margin-bottom:.3rem}
+.pbar-bg{height:6px;background:rgba(255,255,255,.12);border-radius:4px;overflow:hidden}
+.pbar-fill{height:100%;border-radius:4px;background:rgba(255,255,255,.55);width:0%;transition:width 1.4s cubic-bezier(.4,0,.2,1)}
+
+/* ═══════════════════════════════════════════════
+   INFLATION CARDS
+═══════════════════════════════════════════════ */
+.infl-pair{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:1.2rem}
+@media(max-width:600px){.infl-pair{grid-template-columns:1fr}}
+.ic{border-radius:7px;padding:1.3rem 1.4rem;border:1.5px solid}
+.ic.in{background:var(--npsfaint);border-color:#9ab5d8}
+.ic.iu{background:var(--upsfaint);border-color:#8ec4a4}
+.ic h4{
+  font-size:.68rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.15em;padding-bottom:.6rem;margin-bottom:.9rem;
+  border-bottom:1.5px solid;
+}
+.ic.in h4{color:var(--nps);border-color:rgba(26,58,107,.15)}
+.ic.iu h4{color:var(--ups);border-color:rgba(22,90,47,.15)}
+.ir{display:flex;justify-content:space-between;font-size:.82rem;padding:.28rem 0;border-bottom:1px solid rgba(0,0,0,.05);gap:.4rem}
+.ir:last-child{border-bottom:none;padding-top:.5rem;margin-top:.25rem}
+.ir .il{color:var(--muted)}
+.ir .iv{font-family:var(--mono);font-weight:500}
+.ir:last-child .il{color:var(--ink);font-weight:700}
+.ir:last-child .iv{font-weight:700;font-size:.92rem}
+.nc{color:var(--nps)}.uc{color:var(--ups)}
+
+/* ═══════════════════════════════════════════════
+   COMPARISON TABLE
+═══════════════════════════════════════════════ */
+    cmp-scroll{overflow-x:auto;border-radius:6px;border:1px solid var(--border)}
+.cmpt{width:100%;border-collapse:collapse;font-size:.83rem}
+.cmpt thead th{
+  background:var(--navy);color:rgba(255,255,255,.82);
+  padding:.6rem 1.1rem;text-align:left;
+  font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;font-weight:700;
+  white-space:nowrap;
+}
+.cmpt thead th:nth-child(2){color:#9ab5d8}
+.cmpt thead th:nth-child(3){color:#8ec4a4}
+.cmpt tbody td{padding:.55rem 1.1rem;border-bottom:1px solid var(--cream)}
+.cmpt tbody tr:last-child td{border-bottom:none}
+.cmpt tbody tr:hover td{background:#fdfaf5}
+.nv{color:var(--nps);font-family:var(--mono);font-weight:500}
+.uv{color:var(--ups);font-family:var(--mono);font-weight:500}
+.wnps{color:var(--nps);font-weight:700;font-size:.82rem}
+.wups{color:var(--ups);font-weight:700;font-size:.82rem}
+.row-cat td{
+  background:var(--parch)!important;
+  font-size:.67rem;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--muted);font-weight:700;padding:.35rem 1.1rem;
+  border-bottom:1px solid var(--border)!important;
+}
+
+/* ═══════════════════════════════════════════════
+   SALARY TABLE
+═══════════════════════════════════════════════ */
+.sal-scroll{overflow-x:auto;border-radius:6px;border:1px solid var(--border);margin-top:1rem}
+.salty{width:100%;border-collapse:collapse;font-size:.77rem}
+.salty thead th{
+  background:var(--navy);color:rgba(255,255,255,.8);
+  padding:.5rem .9rem;text-align:left;
+  font-size:.64rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700;
+  white-space:nowrap;
+}
+.salty tbody td{
+  padding:.38rem .9rem;border-bottom:1px solid var(--cream);
+  font-family:var(--mono);font-size:.77rem;color:#444;
+  white-space:nowrap;
+}
+.salty tbody tr:hover td{background:#fdfaf5}
+.salty tbody tr:last-child td{border-bottom:none}
+.pcyr td{
+  background:#fffaee!important;
+  color:#6a4e00!important;font-weight:600;
+}
+.joinyr td{background:#f0f5ff!important}
+
+.tgl-btn{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.75rem;color:var(--gold);cursor:pointer;
+  background:none;border:none;font-family:var(--sans);
+  padding:0;margin-top:.7rem;
+  text-decoration:none;font-weight:700;
+  letter-spacing:.04em;text-transform:uppercase;
+}
+.tgl-btn:hover{color:var(--navy)}
+#sal-wrap{display:none;margin-top:.8rem}
+
+/* ═══════════════════════════════════════════════
+   STAT STRIP
+═══════════════════════════════════════════════ */
+.stat-strip{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:1rem;margin-bottom:1.6rem;
+}
+.stat-box{
+  background:var(--white);
+  border:1px solid var(--border);border-radius:7px;
+  padding:.9rem 1.1rem;
+  box-shadow:0 1px 3px rgba(13,31,53,.04);
+  transition:transform .18s,box-shadow .18s;
+}
+.stat-box:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(13,31,53,.08)}
+.sb-l{
+  font-size:.62rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--muted);margin-bottom:.3rem;
+}
+.sb-v{
+  font-family:var(--serif);font-size:1.15rem;font-weight:600;
+  color:var(--navy);
+}
+
+.fnote{
+  font-size:.68rem;color:var(--muted);
+  font-style:italic;margin-top:.7rem;line-height:1.55;
+}
+
+/* ═══════════════════════════════════════════════
+   COUNT-UP ANIMATION
+═══════════════════════════════════════════════ */
+.count-up{display:inline-block;transition:all .3s}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE TWEAKS
+═══════════════════════════════════════════════ */
+@media(max-width:500px){
+  .card{padding:1.3rem 1.2rem}
+  .verdict{padding:1.8rem 1.3rem 1.5rem}
+  .plain{padding:1.2rem 1.3rem}
+  .res-card{padding:1.3rem 1.2rem}
+  .dc{padding:1.2rem}
+  .ic{padding:1rem 1.1rem}
+  .kv{font-size:1rem}
+  .v-head{font-size:1.4rem}
+  .hdr-inner{padding:2.2rem 1.2rem 2rem}
+}
+</style>
 </head>
 <body>
 
-<header>
-    <h1>Government Pension Comparison Portal</h1>
-    <p>Detailed Analysis: Unified Pension Scheme vs National Pension System</p>
+<!-- ══════════════ HEADER ══════════════ -->
+<header class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-kicker">Independent Tool &nbsp;·&nbsp; For Govt Employees Comparing NPS &amp; UPS</div>
+    <h1>NPS vs UPS<br>Pension Calculator</h1>
+    <div class="hdr-sub">For govt employees who joined under the New Pension Scheme and want to compare NPS with UPS</div>
+    <div class="hdr-pills">
+      <span class="hdr-pill">Pay Commission Aware</span>
+      <span class="hdr-pill">Inflation Adjusted</span>
+      <span class="hdr-pill">Real Value Analysis</span>
+      <span class="hdr-pill">Lifetime Comparison</span>
+    
+    <div class="hdr-links" style="margin-top:1rem;display:flex;justify-content:center;gap:.8rem;flex-wrap:wrap">
+      <a href="https://www.npscra.nsdl.co.in/" target="_blank" style="color:rgba(255,255,255,.72);font-size:.72rem;letter-spacing:.08em;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.35)">Know About NPS</a>
+      <a href="https://pib.gov.in/PressReleasePage.aspx?PRID=2057552" target="_blank" style="color:rgba(255,255,255,.72);font-size:.72rem;letter-spacing:.08em;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.35)">Know About UPS</a>
+      <a href="https://pensionersportal.gov.in/" target="_blank" style="color:rgba(255,255,255,.72);font-size:.72rem;letter-spacing:.08em;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.35)">Know About OPS</a>
+    </div>
+
+  </div>
 </header>
 
-<div class="main-container">
-    <!-- Input Section -->
-    <div class="input-panel">
-        <h3 style="border-bottom: 2px solid var(--secondary); padding-bottom: 10px;">Service Inputs</h3>
-        
-        <div class="input-group">
-            <label>Year of Joining Service</label>
-            <input type="number" id="joinYear" value="2015">
-        </div>
-        <div class="input-group">
-            <label>Year of Retirement</label>
-            <input type="number" id="retireYear" value="2045">
-        </div>
-        <div class="input-group">
-            <label>Current Basic Pay (₹)</label>
-            <input type="number" id="basicPay" value="50000">
-        </div>
-        <div class="input-group">
-            <label>Current Pay Commission</label>
-            <select id="cpcSelect">
-                <option value="7">7th Pay Commission (Current)</option>
-                <option value="8">8th Pay Commission (Upcoming 2026)</option>
-            </select>
-        </div>
-        <div class="input-group">
-            <label>Annual Increment (%)</label>
-            <input type="number" id="incRate" value="3">
-        </div>
-        <div class="input-group">
-            <label>Avg. Inflation Rate (%)</label>
-            <input type="number" id="infRate" value="6">
-        </div>
-        <div class="input-group">
-            <label>NPS Expected Growth (%)</label>
-            <input type="number" id="npsRate" value="10">
-        </div>
-        
-        <button class="calculate-btn" onclick="calculateDetailedPension()">Run Comprehensive Analysis</button>
+<div class="wrap">
+
+<!-- ══ 1. EMPLOYEE DETAILS ══ -->
+<div class="card">
+  <div class="card-hdr">
+    <div class="sec-num">1</div>
+    <div>
+      <div class="card-title">Employee Service Details</div>
+      <div class="card-sub">Enter your service start, end, and basic pay at joining</div>
     </div>
-
-    <!-- Results Section -->
-    <div class="output-panel">
-        <h3>Consolidated Pension Summary</h3>
-        <div id="summaryDashboard">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Metric</th>
-                        <th>UPS (Assured Benefit)</th>
-                        <th>NPS (Investment Based)</th>
-                    </tr>
-                </thead>
-                <tbody id="comparisonBody">
-                    <tr><td colspan="3" style="text-align:center; padding:40px;">Please enter your service details and click calculate.</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="official-links">
-            <strong>Policy Documentation:</strong><br><br>
-            <a href="https://pib.gov.in/PressReleasePage.aspx?PRID=2048607" target="_blank">UPS Cabinet Approval (PIB)</a>
-            <a href="https://en.wikipedia.org/wiki/National_Pension_System" target="_blank">Wiki: NPS History</a>
-            <a href="https://pensionersportal.gov.in/" target="_blank">Pensioners' Portal</a>
-        </div>
-
-        <h3 style="margin-top:40px;">Detailed Year-by-Year Pay Commission Simulation</h3>
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Year</th>
-                    <th>Basic Pay (₹)</th>
-                    <th>DA (%)</th>
-                    <th>Total Monthly</th>
-                    <th>NPS Corpus (Accumulated)</th>
-                </tr>
-            </thead>
-            <tbody id="yearlyTableBody"></tbody>
-        </table>
+  </div>
+  <div class="g2">
+    <div class="fld">
+      <label>Year of Joining Service</label>
+      <input type="number" id="joinYear" value="2004" min="1990" max="2060"/>
+      <span class="hint">The year the employee first entered central govt service.</span>
     </div>
+    <div class="fld">
+      <label>Year of Retirement <em>(superannuation)</em></label>
+      <input type="number" id="retireYear" value="2034" min="1995" max="2070"/>
+      <span class="hint">Typically age 60. E.g. born 1974 → retires 2034.</span>
+    </div>
+    <div class="fld">
+      <label>Basic Pay at Joining <em>(₹/month)</em></label>
+      <input type="number" id="basicPay" value="18000" min="1000"/>
+      <span class="hint">Actual basic pay on joining day — already post-commission if joining under a live PC. E.g. ₹18,000 = 7th CPC Level 1.</span>
+    </div>
+    <div class="fld">
+      <label>Annual Increment Rate <em>(% of basic)</em></label>
+      <input type="number" id="incrRate" value="3" step="0.5" min="0" max="20"/>
+      <span class="hint">Standard: 3% per year under 7th CPC. Applied every year except Pay Commission years.</span>
+    </div>
+  </div>
+</div>
+<!-- ══ 2. PAY COMMISSIONS ══ -->
+<div class="card">
+  <div class="card-hdr">
+    <div class="sec-num">2</div>
+    <div>
+      <div class="card-title">Pay Commission Schedule</div>
+      <div class="card-sub">Add every Pay Commission that falls during service — unlimited commissions supported</div>
+    </div>
+  </div>
+
+  <div class="infobox">
+    <strong>How it works:</strong> Between commissions, basic grows by <strong>3% per year</strong>. When a PC arrives:
+    <strong>New Basic = Accumulated Basic × Fitment Factor</strong> — the accumulated basic already has years of 3% increments baked in.
+    <strong>DA resets to 0%</strong> (fitment absorbs all existing DA). Annual increment is skipped that year.
+    Do <em>not</em> add a PC for the joining year — your joining basic already reflects it.
+  </div>
+
+  <div class="presets">
+    <span style="font-size:.7rem;color:var(--muted);align-self:center;margin-right:.3rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em">Quick Add:</span>
+    <button class="pbtn" onclick="addPC('5th Pay Commission',1997,1.40)">5th CPC 1997 ×1.40</button>
+    <button class="pbtn" onclick="addPC('6th Pay Commission',2006,1.86)">6th CPC 2006 ×1.86</button>
+    <button class="pbtn" onclick="addPC('7th Pay Commission',2016,2.57)">7th CPC 2016 ×2.57</button>
+    <button class="pbtn" onclick="addPC('8th Pay Commission',2026,2.28)">8th CPC 2026 ×2.28 (est.)</button>
+    <button class="pbtn" onclick="addPC('9th Pay Commission',2036,2.57)">9th CPC 2036 ×2.57 (est.)</button>
+    <button class="pbtn" onclick="addPC('10th Pay Commission',2046,2.57)">10th CPC 2046 ×2.57 (est.)</button>
+  </div>
+
+  <div class="pc-scroll">
+    <table class="pct" id="pct">
+      <thead>
+        <tr>
+          <th style="width:40px">#</th>
+          <th>Commission Name</th>
+          <th style="width:170px">Implementation Year</th>
+          <th style="width:170px">Fitment Factor (×)</th>
+          <th style="width:55px">Del</th>
+        </tr>
+      </thead>
+      <tbody id="pcbody"></tbody>
+    </table>
+  </div>
+  <button class="add-pc-btn" id="addpcbtn">＋ Add Custom Commission</button>
+
+  <hr class="div"/>
+  <div class="g2">
+    <div class="fld">
+      <label>DA at Joining <em>(% of basic)</em></label>
+      <input type="number" id="daStart" value="0" step="1" min="0" max="200"/>
+      <span class="hint">DA% on the day of joining. Usually 0% if joining just after a Pay Commission.</span>
+    </div>
+    <div class="fld">
+      <label>DA Annual Growth <em>(percentage points added per year)</em></label>
+      <input type="number" id="daGrow" value="4" step="0.5" min="0" max="30"/>
+      <span class="hint">DA grows ~4–6 pp/year (AICPI-IW). Resets to 0 with each Pay Commission.</span>
+    </div>
+  </div>
 </div>
 
-<footer>
-    <p>&copy; 2026 Pension Calculator | Dedicated to Transparency in Retirement Benefits</p>
-</footer>
+<!-- ══ 3. NPS ══ -->
+<div class="card blue-accent">
+  <div class="card-hdr">
+    <div class="sec-num" style="background:var(--nps)">3</div>
+    <div>
+      <div class="card-title">NPS — Contribution &amp; Investment</div>
+      <div class="card-sub">National Pension System parameters</div>
+    </div>
+  </div>
+  <div class="g3">
+    <div class="fld">
+      <label>Employee Contribution <em>(% of Basic+DA)</em></label>
+      <input type="number" id="empC" value="10" step="0.5" min="1" max="30"/>
+    </div>
+    <div class="fld">
+      <label>Govt Contribution — NPS <em>(% of Basic+DA)</em></label>
+      <input type="number" id="govtNPS" value="14" step="0.5" min="1" max="30"/>
+      <span class="hint">14% for central govt (post-2019 rule)</span>
+    </div>
+    <div class="fld">
+      <label>Expected NPS Return <em>(% p.a.)</em></label>
+      <input type="number" id="npsRet" value="9" step="0.5" min="1" max="20"/>
+      <span class="hint">Historical: 9–11% equity fund. Use 7% for conservative estimate.</span>
+    </div>
+    <div class="fld">
+      <label>Annuity Rate <em>(% p.a. on remaining corpus)</em></label>
+      <input type="number" id="annRate" value="6" step="0.5" min="1" max="12"/>
+      <span class="hint">LIC / HDFC Life annuity: 5–7% p.a.</span>
+    </div>
+    <div class="fld">
+      <label>Lump Sum at Retirement <em>(%, max 60)</em></label>
+      <input type="number" id="lumPct" value="60" min="1" max="60"/>
+      <span class="hint">60% of corpus can be withdrawn tax-free. Rest → annuity.</span>
+    </div>
+    <div class="fld">
+      <label>Annuity Annual Growth <em>(% p.a.)</em></label>
+      <input type="number" id="annGrow" value="0" step="0.5" min="0" max="10"/>
+      <span class="hint">0 = flat annuity (most plans). Some offer 1–3% annual increase.</span>
+    </div>
+  </div>
+</div>
+<!-- ══ 4. UPS ══ -->
+<div class="card green-accent">
+  <div class="card-hdr">
+    <div class="sec-num" style="background:var(--ups)">4</div>
+    <div>
+      <div class="card-title">UPS — Unified Pension Scheme</div>
+      <div class="card-sub">Effective April 1, 2025 — for Central Govt employees</div>
+    </div>
+  </div>
+  <div class="g3">
+    <div class="fld">
+      <label>Govt Contribution — UPS <em>(% of Basic+DA)</em></label>
+      <input type="number" id="govtUPS" value="18.5" step="0.5" min="1" max="40"/>
+      <span class="hint">18.5% under UPS vs 14% under NPS — a key advantage</span>
+    </div>
+    <div class="fld">
+      <label>Minimum Pension Guarantee <em>(₹/month)</em></label>
+      <input type="number" id="minPen" value="10000" step="500" min="0"/>
+      <span class="hint">₹10,000/month floor if 10+ years service</span>
+    </div>
+    <div class="fld">
+      <label>Family Pension <em>(% of employee pension)</em></label>
+      <input type="number" id="famPct" value="60" step="5" min="0" max="100"/>
+      <span class="hint">60% to legally wedded spouse on employee's death</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 5. INFLATION ══ -->
+<div class="card gray-accent">
+  <div class="card-hdr">
+    <div class="sec-num" style="background:#555">5</div>
+    <div>
+      <div class="card-title">Inflation &amp; Post-Retirement Assumptions</div>
+      <div class="card-sub">Used to calculate real (purchasing-power) values</div>
+    </div>
+  </div>
+  <div class="g4">
+    <div class="fld">
+      <label>Consumer Inflation <em>(% p.a.)</em></label>
+      <input type="number" id="infl" value="5" step="0.5" min="1" max="15"/>
+      <span class="hint">India CPI avg: 4–6% p.a.</span>
+    </div>
+    <div class="fld">
+      <label>Post-Retirement Life <em>(years)</em></label>
+      <input type="number" id="lifeY" value="25" min="5" max="50"/>
+      <span class="hint">Retire at 60, live to 85 = 25 years</span>
+    </div>
+    <div class="fld">
+      <label>Discount Rate <em>(% p.a.)</em></label>
+      <input type="number" id="discR" value="6.5" step="0.5" min="1" max="15"/>
+      <span class="hint">10-yr Govt bond yield. For present-value calculations.</span>
+    </div>
+    <div class="fld">
+      <label>UPS Dearness Relief Growth <em>(pp/yr)</em></label>
+      <input type="number" id="drGrow" value="4" step="0.5" min="0" max="20"/>
+      <span class="hint">DR on UPS pension grows ~4 pp/yr, protecting purchasing power.</span>
+    </div>
+  </div>
+</div>
+
+<div class="errbox" id="errbox"></div>
+<button class="go-btn" onclick="calculate()">
+  <span class="go-btn-icon">⟳</span>
+  Calculate &amp; Compare NPS vs UPS
+</button>
+
+<!-- ════════════════════════════════════════
+     RESULTS
+════════════════════════════════════════ -->
+<div id="res">
+
+  <!-- VERDICT -->
+  <div class="verdict fade-in" id="vbox" style="margin-top:2.5rem">
+    <div class="v-eyebrow" id="veyebrow">Result</div>
+    <div class="v-head" id="vhead">—</div>
+
+    <!-- NPS vs UPS visual comparison bar -->
+    <div class="vs-bar-wrap" id="vsbarwrap" style="display:none">
+      <div class="vs-label">
+        <span id="vs-nlabel">NPS</span>
+        <span style="opacity:.5;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase">Real Wealth Comparison</span>
+        <span id="vs-ulabel">UPS</span>
+      </div>
+      <div class="vs-track">
+        <div class="vs-nps" id="vs-nbar" style="width:50%"></div>
+        <div class="vs-ups" id="vs-ubar" style="width:50%"></div>
+      </div>
+    </div>
+
+    <div class="v-kpis" id="vkpis"></div>
+    <div class="v-note" id="vnote">—</div>
+  </div>
+
+  <!-- PLAIN LANGUAGE -->
+  <div class="plain fade-in-2">
+    <h3>📖 What does this mean — in plain language?</h3>
+    <div id="plaintext"></div>
+  </div>
+
+  <!-- STAT STRIP -->
+  <div class="stat-strip fade-in-3" id="statstrip"></div>
+
+  <!-- SALARY JOURNEY -->
+  <div class="res-card fade-in-3">
+    <div class="res-card-hdr">
+      <div class="sec-num" style="background:var(--gold);color:var(--white)">↗</div>
+      <div>
+        <div class="rch-title">Salary Journey — Key Milestones</div>
+        <div style="font-size:.73rem;color:var(--muted);margin-top:.05rem">Basic pay at joining, after each Pay Commission, and at retirement</div>
+      </div>
+    </div>
+    <div class="timeline" id="timeline"></div>
+    <p class="fnote">★ Pay Commission year: fitment applied to accumulated basic (after all prior 3% increments). DA resets to 0.</p>
+  </div>
+
+  <!-- NPS + UPS DETAIL -->
+  <div class="two-col fade-in-3">
+    <div class="dc dn">
+      <h3>📊 National Pension System (NPS)</h3>
+      <div class="dr"><span class="dl">Total NPS Corpus Built</span><span class="dv xl" id="r-corpus">—</span></div>
+      <div class="dr"><span class="dl">Lump Sum (<span id="r-lpct">60</span>%, tax-free)</span><span class="dv big" id="r-nls">—</span></div>
+      <div class="dr"><span class="dl">Annuity Corpus (→ pension)</span><span class="dv" id="r-nac">—</span></div>
+      <div class="dr"><span class="dl">Monthly Pension (flat, nominal)</span><span class="dv xl" id="r-npm">—</span></div>
+      <div class="dr"><span class="dl">Annuity Rate Applied</span><span class="dv" id="r-nar">—</span></div>
+      <div class="dr"><span class="dl">Employee's Total Contribution</span><span class="dv" id="r-nec">—</span></div>
+      <div class="dr"><span class="dl">Govt's Total Contribution</span><span class="dv" id="r-ngc">—</span></div>
+      <div class="pbar">
+        <div class="pbar-row"><span>Pension as % of last gross salary</span><span id="r-nrr">—</span></div>
+        <div class="pbar-bg"><div class="pbar-fill" id="bar-n"></div></div>
+      </div>
+    </div>
+    <div class="dc du">
+      <h3>🏛️ Unified Pension Scheme (UPS)</h3>
+      <div class="dr"><span class="dl">Assured Monthly Pension (50% avg basic)</span><span class="dv xl" id="r-ubase">—</span></div>
+      <div class="dr"><span class="dl">Pension + DR at Retirement</span><span class="dv big" id="r-upm">—</span></div>
+      <div class="dr"><span class="dl">Family Pension → spouse</span><span class="dv" id="r-ufam">—</span></div>
+      <div class="dr"><span class="dl">UPS Lump Sum (PFRDA formula)</span><span class="dv big" id="r-uls">—</span></div>
+      <div class="dr"><span class="dl">Govt Gratuity (separate)</span><span class="dv" id="r-ugrat">—</span></div>
+      <div class="dr"><span class="dl">Qualifying Service</span><span class="dv" id="r-usvc">—</span></div>
+      <div class="dr"><span class="dl">Min ₹10,000 Floor Applied?</span><span class="dv" id="r-umin">—</span></div>
+      <div class="pbar">
+        <div class="pbar-row"><span>Pension as % of last gross salary</span><span id="r-urr">—</span></div>
+        <div class="pbar-bg"><div class="pbar-fill" id="bar-u"></div></div>
+      </div>
+    </div>
+  </div>
+    <!-- INFLATION ADJUSTED -->
+  <div class="res-card fade-in-4">
+    <div class="res-card-hdr">
+      <div class="sec-num" style="background:#555">📉</div>
+      <div>
+        <div class="rch-title">Inflation-Adjusted Values — In Today's Rupees</div>
+        <div style="font-size:.73rem;color:var(--muted);margin-top:.05rem">True purchasing power comparison</div>
+      </div>
+    </div>
+    <div class="infobox">
+      ₹30,000/month in 2035 buys far less than ₹30,000 today. These values convert all future money back to <strong>today's purchasing power</strong>. <strong>UPS pension grows with DR</strong>, so it holds value better than a flat NPS annuity over a long retirement.
+    </div>
+    <div class="infl-pair">
+      <div class="ic in">
+        <h4>NPS — Real Values</h4>
+        <div class="ir"><span class="il">Lump Sum (real value)</span><span class="iv nc" id="ir-nls">—</span></div>
+        <div class="ir"><span class="il">Monthly Pension — Year 1 of retirement</span><span class="iv nc" id="ir-np1">—</span></div>
+        <div class="ir"><span class="il">Monthly Pension — Year 10 of retirement</span><span class="iv nc" id="ir-np10">—</span></div>
+        <div class="ir"><span class="il">Monthly Pension — Year 20 of retirement</span><span class="iv nc" id="ir-np20">—</span></div>
+        <div class="ir"><span class="il">PV of lifetime pensions</span><span class="iv nc" id="ir-npv">—</span></div>
+        <div class="ir"><span class="il">💰 Total Real Wealth</span><span class="iv nc" id="ir-ntot">—</span></div>
+      </div>
+      <div class="ic iu">
+        <h4>UPS — Real Values</h4>
+        <div class="ir"><span class="il">Lumpsum + Gratuity (real value)</span><span class="iv uc" id="ir-uls">—</span></div>
+        <div class="ir"><span class="il">Monthly Pension — Year 1 of retirement</span><span class="iv uc" id="ir-up1">—</span></div>
+        <div class="ir"><span class="il">Monthly Pension — Year 10 of retirement</span><span class="iv uc" id="ir-up10">—</span></div>
+        <div class="ir"><span class="il">Monthly Pension — Year 20 of retirement</span><span class="iv uc" id="ir-up20">—</span></div>
+        <div class="ir"><span class="il">PV of lifetime pensions</span><span class="iv uc" id="ir-upv">—</span></div>
+        <div class="ir"><span class="il">💰 Total Real Wealth</span><span class="iv uc" id="ir-utot">—</span></div>
+      </div>
+    </div>
+    <p class="fnote">NPS annuity is flat (or grows at your chosen rate). UPS pension grows with Dearness Relief (+~4 pp/yr), protecting purchasing power much better over a 20–25 year retirement. PV uses your discount rate.</p>
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <div class="res-card fade-in-4">
+    <div class="res-card-hdr">
+      <div class="sec-num" style="background:var(--gold);color:var(--white)">⚖</div>
+      <div><div class="rch-title">Complete Side-by-Side Comparison</div></div>
+    </div>
+    <div class="cmp-scroll">
+      <table class="cmpt">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>NPS Value</th>
+            <th>UPS Value</th>
+            <th>Better Option</th>
+          </tr>
+        </thead>
+        <tbody id="cmptbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- YEAR-BY-YEAR TABLE -->
+  <div class="res-card fade-in-4">
+    <div class="res-card-hdr">
+      <div class="sec-num" style="background:#555">📋</div>
+      <div><div class="rch-title">Year-by-Year Salary &amp; NPS Corpus</div></div>
+    </div>
+    <button class="tgl-btn" id="tglbtn" onclick="toggleSal()">▼ Show full year-by-year table</button>
+    <div id="sal-wrap">
+      <div class="sal-scroll"><table class="salty" id="saltbl"></table></div>
+    </div>
+    <p class="fnote">★ = Pay Commission year (DA resets to 0, increment skipped, fitment applied to accumulated basic). DA grows additively (+fixed pp/year, NOT multiplicatively).</p>
+  </div>
+
+</div><!-- /res -->
+</div><!-- /wrap -->
 
 <script>
-    function calculateDetailedPension() {
-        const joinYear = parseInt(document.getElementById('joinYear').value);
-        const retireYear = parseInt(document.getElementById('retireYear').value);
-        const currentYear = 2026;
-        const totalYearsLeft = retireYear - currentYear;
-        
-        let basic = parseFloat(document.getElementById('basicPay').value);
-        let da = 50; // Current approx DA
-        const inc = parseFloat(document.getElementById('incRate').value) / 100;
-        const inf = parseFloat(document.getElementById('infRate').value) / 100;
-        const npsR = parseFloat(document.getElementById('npsRate').value) / 100;
+/* ═══════════════════════════════════════
+   PAY COMMISSION TABLE
+═══════════════════════════════════════ */
+var pcData=[
+  {name:'7th Pay Commission',year:2016,fitment:2.57},
+  {name:'8th Pay Commission',year:2026,fitment:2.28}
+];
 
-        let npsCorpus = 0;
-        let yearlyHtml = "";
+function renderPC(){
+  var tb=document.getElementById('pcbody');
+  tb.innerHTML='';
+  if(!pcData.length){
+    tb.innerHTML='<tr><td colspan="5" style="text-align:center;color:#aaa;padding:1.2rem;font-style:italic;font-size:.82rem">No commissions added. Click a quick-add button above.</td></tr>';
+    return;
+  }
+  pcData.forEach(function(r,i){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td class="tnum">'+(i+1)+'</td>'
+      +'<td><input type="text" data-i="'+i+'" data-f="name" value="'+esc(r.name)+'" style="min-width:170px"/></td>'
+      +'<td><input type="number" data-i="'+i+'" data-f="year" value="'+r.year+'" min="1990" max="2070" style="width:110px"/></td>'
+      +'<td><input type="number" data-i="'+i+'" data-f="fitment" value="'+r.fitment+'" min="1.01" max="10" step="0.01" style="width:110px"/></td>'
+      +'<td><button class="del-btn" data-d="'+i+'">✕</button></td>';
+    tb.appendChild(tr);
+  });
+}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;');}
 
-        for (let y = currentYear; y <= retireYear; y++) {
-            // Pay Commission Logic: DA merges into basic every 10 years (2026, 2036, etc.)
-            if ((y - 2006) % 10 === 0 || y === 2026) {
-                basic = basic + (basic * (da / 100));
-                da = 0;
-            } else {
-                basic = basic * (1 + inc);
-                da += 6; // Typical 6% annual DA increase
-            }
+document.getElementById('pcbody').addEventListener('input',function(e){
+  var t=e.target,i=parseInt(t.getAttribute('data-i')),f=t.getAttribute('data-f');
+  if(isNaN(i)||!f)return;
+  if(f==='name')pcData[i].name=t.value;
+  else if(f==='year')pcData[i].year=parseInt(t.value)||0;
+  else if(f==='fitment')pcData[i].fitment=parseFloat(t.value)||1;
+});
+document.getElementById('pcbody').addEventListener('click',function(e){
+  var b=e.target.closest('[data-d]');
+  if(!b)return;
+  pcData.splice(parseInt(b.getAttribute('data-d')),1);
+  renderPC();
+});
+document.getElementById('addpcbtn').addEventListener('click',function(){
+  var ly=pcData.length?pcData[pcData.length-1].year+10:2036;
+  pcData.push({name:'New Pay Commission',year:ly,fitment:2.57});
+  renderPC();
+  var ins=document.querySelectorAll('#pcbody input[data-f="name"]');
+  if(ins.length)ins[ins.length-1].focus();
+});
+function addPC(n,y,f){
+  var exists=pcData.some(function(p){
+    return p.year===y && p.name.toLowerCase()===String(n).toLowerCase();
+  });
+  if(exists){
+    alert('This Pay Commission already exists in the table.');
+    return;
+  }
+  pcData.push({name:n,year:y,fitment:f});
+  pcData.sort(function(a,b){return a.year-b.year;});
+  renderPC();
+}
 
-            let monthlyEmoluments = basic + (basic * da / 100);
-            let npsContribution = monthlyEmoluments * 0.24; // 10% self + 14% govt
-            npsCorpus = (npsCorpus + (npsContribution * 12)) * (1 + npsR);
+/* ═══════════════════════════════════════
+   FORMAT & MATH HELPERS
+═══════════════════════════════════════ */
+function fmt(n){
+  if(isNaN(n)||n==null)return'—';
+  var a=Math.abs(n);
+  if(a>=1e7)return'₹'+(n/1e7).toFixed(2)+' Cr';
+  if(a>=1e5)return'₹'+(n/1e5).toFixed(2)+' L';
+  return'₹'+Math.round(n).toLocaleString('en-IN');
+}
+function fmtM(n){return fmt(n)+'/mo';}
+function fmtP(n){return n.toFixed(1)+'%';}
+function set(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
 
-            yearlyHtml += `<tr>
-                <td>${y}</td>
-                <td>₹${Math.round(basic).toLocaleString()}</td>
-                <td>${da}%</td>
-                <td>₹${Math.round(monthlyEmoluments).toLocaleString()}</td>
-                <td>₹${Math.round(npsCorpus).toLocaleString()}</td>
-            </tr>`;
-        }
+function deflate(v,inflPct,yrs){
+  return v/Math.pow(1+inflPct/100,yrs);
+}
+function pvGA(pmt1,discPct,growPP,numYears){
+  var r=discPct/100/12,g=growPP/100/12,n=numYears*12;
+  if(Math.abs(r-g)<1e-9)return pmt1*n;
+  return pmt1*(1-Math.pow((1+g)/(1+r),n))/(r-g);
+}
 
-        // Final Calculations
-        const upsPensionNominal = basic * 0.5;
-        const upsLump = ((basic + (basic * da / 100)) / 10) * ((retireYear - joinYear) * 2);
-        
-        const npsLump = npsCorpus * 0.6;
-        const npsPensionNominal = (npsCorpus * 0.4 * 0.06) / 12;
+/* ═══════════════════════════════════════
+   COUNT-UP ANIMATION
+═══════════════════════════════════════ */
+function animateCountUp(el,targetStr){
+  // extract numeric value if formatted
+  var isRs=targetStr.indexOf('₹')>=0;
+  if(!isRs){el.textContent=targetStr;return;}
+  var orig=el.textContent;
+  var nums=targetStr.replace(/[₹,\s]/g,'');
+  var isCr=targetStr.indexOf('Cr')>=0;
+  var isL=targetStr.indexOf(' L')>=0;
+  var end=parseFloat(nums);
+  if(isNaN(end)){el.textContent=targetStr;return;}
+  var start=0,dur=900,step=16,frames=Math.ceil(dur/step),cur=0;
+  var t=setInterval(function(){
+    cur++;
+    var val=end*(cur/frames);
+    var disp=isCr?'₹'+val.toFixed(2)+' Cr':isL?'₹'+val.toFixed(2)+' L':'₹'+Math.round(val).toLocaleString('en-IN');
+    el.textContent=disp;
+    if(cur>=frames){el.textContent=targetStr;clearInterval(t);}
+  },step);
+}
 
-        // Inflation Adjustment (Purchasing Power)
-        const pvFactor = Math.pow(1 + inf, totalYearsLeft);
-        const upsReal = upsPensionNominal / pvFactor;
-        const npsReal = npsPensionNominal / pvFactor;
+/* ═══════════════════════════════════════
+   MAIN CALCULATION
+═══════════════════════════════════════ */
+function calculate(){
+  var errbox=document.getElementById('errbox');
+  errbox.style.display='none';errbox.innerHTML='';
 
-        // Update Dashboard
-        document.getElementById('comparisonBody').innerHTML = `
-            <tr><td>Monthly Pension (Nominal)</td><td class="highlight-ups">₹${Math.round(upsPensionNominal).toLocaleString()}</td><td class="highlight-nps">₹${Math.round(npsPensionNominal).toLocaleString()}</td></tr>
-            <tr><td><b>Purchasing Power (In Today's ₹)</b></td><td class="highlight-ups">₹${Math.round(upsReal).toLocaleString()}</td><td class="highlight-nps">₹${Math.round(npsReal).toLocaleString()}</td></tr>
-            <tr><td>Retirement Lumpsum</td><td>₹${Math.round(upsLump).toLocaleString()}</td><td>₹${Math.round(npsLump).toLocaleString()}</td></tr>
-            <tr><td>Dearness Relief (Inflation Protection)</td><td>Guaranteed</td><td>Market Linked</td></tr>
-        `;
-        document.getElementById('yearlyTableBody').innerHTML = yearlyHtml;
+  var joinYear  =parseInt(document.getElementById('joinYear').value);
+  var retireYear=parseInt(document.getElementById('retireYear').value);
+  var basicPay0 =parseFloat(document.getElementById('basicPay').value);
+  var incrRate  =parseFloat(document.getElementById('incrRate').value);
+  var daStart   =parseFloat(document.getElementById('daStart').value);
+  var daGrowPP  =parseFloat(document.getElementById('daGrow').value);
+  var empC      =parseFloat(document.getElementById('empC').value)/100;
+  var govtNPS   =parseFloat(document.getElementById('govtNPS').value)/100;
+  var govtUPS   =parseFloat(document.getElementById('govtUPS').value)/100;
+  var npsRet    =parseFloat(document.getElementById('npsRet').value)/100;
+  var annRate   =parseFloat(document.getElementById('annRate').value)/100;
+  var annGrowPP =parseFloat(document.getElementById('annGrow').value);
+  var lumPct    =parseFloat(document.getElementById('lumPct').value)/100;
+  var minPen    =parseFloat(document.getElementById('minPen').value);
+  var famPct    =parseFloat(document.getElementById('famPct').value)/100;
+  var inflPct   =parseFloat(document.getElementById('infl').value);
+  var lifeY     =parseInt(document.getElementById('lifeY').value);
+  var discR     =parseFloat(document.getElementById('discR').value);
+  var drGrowPP  =parseFloat(document.getElementById('drGrow').value);
+
+  var errs=[];
+  if(isNaN(joinYear)||isNaN(retireYear))errs.push('Enter valid joining and retirement years.');
+  if(!isNaN(joinYear)&&!isNaN(retireYear)&&retireYear<=joinYear)errs.push('Retirement year must be after joining year.');
+  if(basicPay0<500)errs.push('Joining basic pay seems too low.');
+  if(lumPct>0.6)errs.push('Lump sum cannot exceed 60% under NPS rules.');
+  if(errs.length){errbox.innerHTML='⚠ '+errs.join('<br>⚠ ');errbox.style.display='block';return;}
+
+  var svcYrs=Math.max(retireYear-joinYear,0);
+  var curYear=new Date().getFullYear();
+  var yToRetire=Math.max(retireYear-curYear,0);
+
+  /* Only PCs strictly AFTER joinYear and before retireYear */
+  var sortedPCs=pcData.slice().sort(function(a,b){return a.year-b.year;});
+  var activePCs=sortedPCs.filter(function(p){return p.year>joinYear&&p.year<retireYear;});
+
+  /* ── YEAR-BY-YEAR ── */
+  var basic=basicPay0,da=daStart;
+  var npsCorpus=0;
+  var totalEmpC=0,totalGovtNPS=0,totalGovtUPS=0;
+  var mR=npsRet/12;
+  var salRows=[],pcLog=[],last12=[],j;
+
+  for(var yr=joinYear;yr<=retireYear;yr++){
+    if(yr===joinYear){
+      /* joining year — use inputs as-is */
+    } else {
+      var pcThis=null;
+      for(j=0;j<activePCs.length;j++){if(activePCs[j].year===yr){pcThis=activePCs[j];break;}}
+      if(pcThis){
+        var ob=basic;
+        basic=basic*pcThis.fitment;
+        da=0;
+        pcLog.push({name:pcThis.name,year:yr,fitment:pcThis.fitment,ob:ob,nb:basic});
+      } else {
+        basic=basic*(1+incrRate/100);
+        da=da+daGrowPP;
+      }
     }
+
+    var gross=basic*(1+da/100);
+    var empM=gross*empC,govNM=gross*govtNPS,govUM=gross*govtUPS;
+    totalEmpC+=empM*12;totalGovtNPS+=govNM*12;totalGovtUPS+=govUM*12;
+    for(j=0;j<12;j++) npsCorpus=npsCorpus*(1+mR)+(empM+govNM);
+    salRows.push({yr:yr,basic:basic,da:da,gross:gross,empM:empM,govNM:govNM,corpus:npsCorpus,
+      isPC:pcLog.length>0&&pcLog[pcLog.length-1].year===yr});
+    last12.push(basic);
+    if(last12.length>12)last12.shift();
+  }
+
+  var lastRow=salRows[salRows.length-1];
+  var lastBasic=lastRow.basic,lastDA=lastRow.da,lastGross=lastRow.gross;
+  var avg12=last12.reduce(function(a,b){return a+b;},0)/last12.length;
+
+  /* NPS */
+  var npsLS=npsCorpus*lumPct,npsAC=npsCorpus*(1-lumPct);
+  var npsPm=(npsAC*annRate)/12;
+
+  /* UPS */
+  var upsPct=0;
+  if(svcYrs>=25)upsPct=0.50;
+  else if(svcYrs>=10)upsPct=0.50*(svcYrs/25);
+  var upsBase=avg12*upsPct;
+  var minApplied=(svcYrs>=10)&&(upsBase<minPen);
+  if(minApplied)upsBase=minPen;
+  var upsFam=upsBase*famPct;
+  var halfYears=Math.floor(svcYrs)*2;
+  var upsLS=(lastGross/10)*halfYears;
+  var upsGrat=Math.min((lastGross/4)*halfYears,2500000);
+
+  var npsRR=(npsPm/lastGross)*100;
+  var upsRR=(upsBase/lastGross)*100;
+
+  /* Inflation adjusted */
+  function npsAt(y){return npsPm*Math.pow(1+annGrowPP/100,y);}
+  function upsAt(y){return upsBase*(1+y*drGrowPP/100);}
+
+  var irNLS=deflate(npsLS,inflPct,yToRetire);
+  var irNp1=deflate(npsAt(1),inflPct,yToRetire+1);
+  var irNp10=deflate(npsAt(10),inflPct,yToRetire+10);
+  var irNp20=lifeY>=20?deflate(npsAt(20),inflPct,yToRetire+20):null;
+  var pvN=pvGA(npsPm,discR,annGrowPP,lifeY);
+  var pvNreal=deflate(pvN,inflPct,yToRetire);
+  var irNtot=irNLS+pvNreal;
+
+  var irULS=deflate(upsLS+upsGrat,inflPct,yToRetire);
+  var irUp1=deflate(upsAt(1),inflPct,yToRetire+1);
+  var irUp10=deflate(upsAt(10),inflPct,yToRetire+10);
+  var irUp20=lifeY>=20?deflate(upsAt(20),inflPct,yToRetire+20):null;
+  var pvU=pvGA(upsBase,discR,drGrowPP,lifeY);
+  var pvUreal=deflate(pvU,inflPct,yToRetire);
+  var irUtot=irULS+pvUreal;
+
+  var diff=Math.abs(irNtot-irUtot);
+  var diffBase=Math.max(Math.min(irNtot,irUtot),1);
+  var diffPct=(diff/diffBase)*100;
+  var winner=diffPct<7?'tie':(irNtot>irUtot?'nps':'ups');
+
+  /* ══ UPDATE DOM ══ */
+
+  /* Verdict */
+  var vbox=document.getElementById('vbox');
+  var eyebrow,head,note;
+  if(winner==='nps'){
+    vbox.className='verdict vn fade-in';
+    eyebrow='✓ RECOMMENDATION';
+    head='Choose NPS — it delivers '+diffPct.toFixed(0)+'% more real wealth than UPS';
+    note='Based on an assumed NPS return of '+fmtP(npsRet*100)+' p.a. NPS returns are market-linked and NOT guaranteed. If returns fall below ~'+fmtP((npsRet-0.02)*100)+', UPS becomes competitive. Re-run with 7% to stress-test.';
+  }else if(winner==='ups'){
+    vbox.className='verdict vu fade-in';
+    eyebrow='✓ RECOMMENDATION';
+    head='Choose UPS — it delivers '+diffPct.toFixed(0)+'% more real wealth than NPS';
+    note='UPS pension is guaranteed and grows with Dearness Relief, protecting your purchasing power. NPS can only match UPS if it consistently earns above '+fmtP(npsRet*100)+' p.a.';
+  }else{
+    vbox.className='verdict vt fade-in';
+    eyebrow='⚖ BALANCED — BOTH ARE COMPETITIVE';
+    head='NPS and UPS are within '+diffPct.toFixed(1)+'% of each other — risk preference decides';
+    note='NPS: higher lump sum, market upside, no guarantee. UPS: guaranteed pension, DR inflation protection, certain family pension of '+fmtM(upsFam)+'.';
+  }
+  set('veyebrow',eyebrow);set('vhead',head);set('vnote',note);
+
+  /* VS bar */
+  var vbw=document.getElementById('vsbarwrap');
+  vbw.style.display='block';
+  var total=irNtot+irUtot;
+  var nPct=(irNtot/total)*100,uPct=(irUtot/total)*100;
+  setTimeout(function(){
+    document.getElementById('vs-nbar').style.width=nPct+'%';
+    document.getElementById('vs-ubar').style.width=uPct+'%';
+  },200);
+  set('vs-nlabel','NPS '+fmt(irNtot));
+  set('vs-ulabel',fmt(irUtot)+' UPS');
+
+  /* KPI grid */
+  var kpiData=[
+    ['NPS Total Corpus',fmt(npsCorpus),'built over '+svcYrs+' yrs'],
+    ['NPS Lump Sum',fmt(npsLS),Math.round(lumPct*100)+'% of corpus, tax-free'],
+    ['UPS Lumpsum + Gratuity',fmt(upsLS+upsGrat),'guaranteed at retirement'],
+    ['NPS Real Wealth',fmt(irNtot),"today's purchasing power"],
+    ['UPS Real Wealth',fmt(irUtot),"today's purchasing power"],
+    ['Winner by',diffPct<7?'< 7% (too close)':diffPct.toFixed(0)+'%',winner==='tie'?'balanced choice':winner.toUpperCase()+' wins'],
+  ];
+  document.getElementById('vkpis').innerHTML=kpiData.map(function(x){
+    return'<div class="kpi"><div class="kl">'+x[0]+'</div><div class="kv count-up">'+x[1]+'</div><div class="ks">'+x[2]+'</div></div>';
+  }).join('');
+  /* animate count-up on KPI values */
+  setTimeout(function(){
+    document.querySelectorAll('#vkpis .count-up').forEach(function(el,i){
+      setTimeout(function(){animateCountUp(el,el.textContent);},i*60);
+    });
+  },150);
+
+  /* Plain text */
+  var pcList=pcLog.map(function(p){return p.year+' ('+p.name+', ×'+p.fitment+', '+fmt(p.ob)+' → '+fmt(p.nb)+')';}).join('; ');
+  document.getElementById('plaintext').innerHTML=
+    '<p>This employee joins in <span class="hl">'+joinYear+'</span> with a basic pay of <span class="hl">'+fmt(basicPay0)+'</span> and retires in <span class="hl">'+retireYear+'</span> — a total service of <span class="hl">'+svcYrs+' years</span>.</p>'
+    +'<ul>'
+    +(pcLog.length?'<li>During service they will see <strong>'+pcLog.length+' Pay Commission(s)</strong>: '+pcList+'. Each time, the fitment is applied to the accumulated basic (after all prior 3% increments), and DA resets to 0%.</li>':'<li>No Pay Commissions fall within this service period.</li>')
+    +'<li>Final basic: <strong>'+fmt(lastBasic)+'</strong> | DA at retirement: <strong>'+fmtP(lastDA)+'%</strong> | Last gross (Basic+DA): <strong>'+fmt(lastGross)+'</strong>.</li>'
+    +'<li>UPS pension = 50% of avg last-12-months basic = 50% of <strong>'+fmt(avg12)+'</strong> = <strong>'+fmtM(upsBase)+'</strong>/month (rises with DR ~'+drGrowPP+'pp/yr over time).</li>'
+    +'<li><strong>NPS:</strong> corpus of <strong>'+fmt(npsCorpus)+'</strong> built. Take <strong>'+fmt(npsLS)+'</strong> tax-free + receive <strong>'+fmtM(npsPm)+'</strong>/month flat annuity for life.</li>'
+    +'<li><strong>UPS:</strong> guaranteed <strong>'+fmtM(upsBase)+'</strong>/month pension, lump sum <strong>'+fmt(upsLS)+'</strong>, gratuity <strong>'+fmt(upsGrat)+'</strong>.</li>'
+    +'<li>In <strong>today\'s rupees</strong>: by year 10 of retirement, NPS pension is worth <strong>'+fmtM(irNp10)+'</strong>/month but UPS is worth <strong>'+fmtM(irUp10)+'</strong>/month — DR keeps UPS stronger.</li>'
+    +'</ul>';
+
+  /* Stat strip */
+  document.getElementById('statstrip').innerHTML=[
+    ['Service Years',svcYrs+' years'],
+    ['Starting Basic',fmt(basicPay0)],
+    ['Final Basic Pay',fmt(lastBasic)],
+    ['DA at Retirement',fmtP(lastDA)],
+    ['Final Gross Salary',fmt(lastGross)],
+    ['Pay Commissions',pcLog.length+' applied'],
+  ].map(function(x){
+    return'<div class="stat-box"><div class="sb-l">'+x[0]+'</div><div class="sb-v">'+x[1]+'</div></div>';
+  }).join('');
+
+  /* Timeline */
+  var tl=[];
+  tl.push({yr:joinYear,name:'Joining',val:fmt(basicPay0)+'/mo',sub:'Basic at joining',cls:'start-item',icon:'🚀'});
+  pcLog.forEach(function(p){
+    tl.push({yr:p.year,name:p.name,val:'×'+p.fitment+' fitment',sub:fmt(p.ob)+' → '+fmt(p.nb),cls:'pc-item',icon:'★'});
+  });
+  tl.push({yr:retireYear,name:'Retirement',val:fmt(lastBasic)+'/mo',sub:'DA '+fmtP(lastDA)+' | Gross '+fmt(lastGross),cls:'end-item',icon:'🏁'});
+  document.getElementById('timeline').innerHTML=tl.map(function(s){
+    return'<div class="tl-item '+s.cls+'">'
+      +'<div class="tl-dot">'+s.icon+'</div>'
+      +'<div class="tl-year">'+s.yr+'</div>'
+      +'<div class="tl-name">'+s.name+'</div>'
+      +'<div class="tl-val">'+s.val+'</div>'
+      +'<div class="tl-sub">'+s.sub+'</div>'
+      +'</div>';
+  }).join('');
+
+  /* Detail cards */
+  set('r-corpus',fmt(npsCorpus));set('r-lpct',Math.round(lumPct*100));set('r-apct',Math.round((1-lumPct)*100));
+  set('r-nls',fmt(npsLS));set('r-nac',fmt(npsAC));set('r-npm',fmtM(npsPm));
+  set('r-nar',fmtP(annRate*100)+' p.a.');set('r-nec',fmt(totalEmpC));set('r-ngc',fmt(totalGovtNPS));
+  set('r-nrr',fmtP(npsRR));document.getElementById('bar-n').style.width=Math.min(npsRR,100)+'%';
+  set('r-ubase',fmtM(upsBase));set('r-upm',fmtM(upsBase)+' + DR (+'+drGrowPP+'pp/yr)');
+  set('r-ufam',fmtM(upsFam));set('r-uls',fmt(upsLS));set('r-ugrat',fmt(upsGrat));
+  set('r-usvc',svcYrs+' years');set('r-umin',minApplied?'Yes — ₹10,000 floor applied':'No');
+  set('r-urr',fmtP(upsRR));document.getElementById('bar-u').style.width=Math.min(upsRR,100)+'%';
+
+/* Inflation */
+  set('ir-nls',fmt(irNLS));set('ir-np1',fmtM(irNp1));set('ir-np10',fmtM(irNp10));
+  set('ir-np20',irNp20?fmtM(irNp20):'N/A');set('ir-npv',fmt(pvNreal));set('ir-ntot',fmt(irNtot));
+  set('ir-uls',fmt(irULS));set('ir-up1',fmtM(irUp1));set('ir-up10',fmtM(irUp10));
+  set('ir-up20',irUp20?fmtM(irUp20):'N/A');set('ir-upv',fmt(pvUreal));set('ir-utot',fmt(irUtot));
+
+  /* Comparison table */
+  var rows=[
+    {cat:'Monthly Pension'},
+    ['Monthly Pension (nominal)',          fmtM(npsPm),                   fmtM(upsBase),                   npsPm>upsBase?'nps':'ups'],
+    ['Real Pension — Year 1',              fmtM(irNp1),                   fmtM(irUp1),                     irNp1>irUp1?'nps':'ups'],
+    ['Real Pension — Year 10',             fmtM(irNp10),                  fmtM(irUp10),                    irNp10>irUp10?'nps':'ups'],
+    ['Real Pension — Year 20',             irNp20?fmtM(irNp20):'N/A',     irUp20?fmtM(irUp20):'N/A',       irNp20&&irUp20?(irNp20>irUp20?'nps':'ups'):'—'],
+    {cat:'Lump Sum & Gratuity'},
+    ['Lump Sum at Retirement',             fmt(npsLS),                    fmt(upsLS),                      npsLS>upsLS?'nps':'ups'],
+    ['Govt Gratuity',                      '—',                           fmt(upsGrat),                    'ups'],
+    ['Lumpsum + Gratuity (total)',          fmt(npsLS),                    fmt(upsLS+upsGrat),              npsLS>(upsLS+upsGrat)?'nps':'ups'],
+    {cat:'Quality of Pension'},
+    ['Pension Guarantee',                  'No — market-linked',          'Yes — 50% of avg basic',        'ups'],
+    ['Inflation Protection',               annGrowPP>0?'+'+fmtP(annGrowPP)+'/yr':'None (flat annuity)',    'DR +'+drGrowPP+'pp/yr','ups'],
+    ['Family Pension (to spouse)',         'Depends on annuity plan',     fmtM(upsFam),                    'ups'],
+    {cat:'Overall Financial Value'},
+    ['Pension Replacement Ratio',          fmtP(npsRR),                   fmtP(upsRR),                     npsRR>upsRR?'nps':'ups'],
+    ['PV of Lifetime Pensions (real)',     fmt(pvNreal),                  fmt(pvUreal),                    pvNreal>pvUreal?'nps':'ups'],
+    ['Total Real Wealth',                  fmt(irNtot),                   fmt(irUtot),                     irNtot>irUtot?'nps':'ups'],
+    {cat:'Contributions'},
+    ['Employee Contribution (total)',      fmt(totalEmpC),                fmt(totalEmpC),                  '—'],
+    ['Govt Contribution (total)',          fmt(totalGovtNPS),             fmt(totalGovtUPS),               totalGovtUPS>totalGovtNPS?'ups':'nps'],
+    ['NPS Corpus Built',                   fmt(npsCorpus),                '—',                             '—'],
+  ];
+  document.getElementById('cmptbody').innerHTML=rows.map(function(r){
+    if(r.cat)return'<tr class="row-cat"><td colspan="4">'+r.cat+'</td></tr>';
+    var w=r[3]==='nps'?'<span class="wnps">▲ NPS</span>':r[3]==='ups'?'<span class="wups">▲ UPS</span>':'—';
+    return'<tr><td><strong>'+r[0]+'</strong></td><td class="nv">'+r[1]+'</td><td class="uv">'+r[2]+'</td><td>'+w+'</td></tr>';
+  }).join('');
+
+  /* Salary table */
+  var tbl=document.getElementById('saltbl');
+  tbl.innerHTML='<thead><tr><th>Year</th><th>Event</th><th>Basic Pay</th><th>DA %</th><th>Gross (B+DA)</th><th>NPS Contrib / yr</th><th>NPS Corpus (cumul.)</th></tr></thead>';
+  var tbdy=document.createElement('tbody');
+  salRows.forEach(function(r){
+    var tr=document.createElement('tr');
+    var evt='—';
+    if(r.yr===joinYear)evt='Joining year';
+    else{
+      var pl=pcLog.find(function(p){return p.year===r.yr;});
+      if(pl)evt='★ '+pl.name+' (×'+pl.fitment+')';
+      else evt='+'+incrRate+'% annual increment';
+    }
+    if(r.yr===joinYear)tr.className='joinyr';
+    else if(r.isPC)tr.className='pcyr';
+    tr.innerHTML='<td style="font-family:var(--mono)">'+r.yr+'</td><td style="font-size:.76rem">'+evt+'</td>'
+      +'<td style="font-family:var(--mono)">'+fmt(r.basic)+'</td>'
+      +'<td style="font-family:var(--mono)">'+r.da.toFixed(1)+'%</td>'
+      +'<td style="font-family:var(--mono)">'+fmt(r.gross)+'</td>'
+      +'<td style="font-family:var(--mono)">'+fmt((r.empM+r.govNM)*12)+'</td>'
+      +'<td style="font-family:var(--mono)">'+fmt(r.corpus)+'</td>';
+    tbdy.appendChild(tr);
+  });
+  tbl.appendChild(tbdy);
+
+  document.getElementById('res').style.display='block';
+  setTimeout(function(){document.getElementById('res').scrollIntoView({behavior:'smooth'});},120);
+}
+
+function toggleSal(){
+  var w=document.getElementById('sal-wrap'),b=document.getElementById('tglbtn');
+  if(w.style.display==='none'){w.style.display='block';b.textContent='▲ Hide year-by-year table';}
+  else{w.style.display='none';b.textContent='▼ Show full year-by-year table';}
+}
+
+renderPC();
 </script>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer style="
+  background:var(--navy);
+  border-top:3px solid;
+  border-image:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent) 1;
+  padding:2.2rem 1.5rem 1.8rem;
+  text-align:center;
+  position:relative;overflow:hidden;
+  margin-top:1rem;
+">
+  <!-- subtle chakra watermark -->
+  <span style="
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    font-size:160px;color:rgba(255,255,255,.018);
+    pointer-events:none;user-select:none;line-height:1;
+  ">☸</span>
+
+  <div style="position:relative;z-index:1">
+    <!-- decorative line -->
+    <div style="
+      display:flex;align-items:center;justify-content:center;gap:1rem;
+      margin-bottom:1.2rem;
+    ">
+      <div style="height:1px;width:50px;background:linear-gradient(90deg,transparent,rgba(201,147,42,.4))"></div>
+      <span style="font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(201,147,42,.5);font-weight:700">India Pension Tools</span>
+      <div style="height:1px;width:50px;background:linear-gradient(90deg,rgba(201,147,42,.4),transparent)"></div>
+    </div>
+
+    <!-- main credit -->
+    <p style="
+      font-family:'Cormorant Garamond',Georgia,serif;
+      font-size:1.5rem;font-weight:500;
+      color:rgba(255,255,255,.88);
+      letter-spacing:.03em;margin-bottom:.4rem;
+    ">
+      Created by &nbsp;<span style="
+        color:var(--gold2);font-weight:600;font-style:italic;
+        border-bottom:1px solid rgba(224,176,74,.4);padding-bottom:.05rem;
+      ">Suman Debnath</span>
+    </p>
+
+    <p style="
+      font-family:'Lato',sans-serif;
+      font-size:.82rem;font-weight:300;letter-spacing:.08em;
+      color:rgba(255,255,255,.38);
+      margin-bottom:1.4rem;
+    ">
+      NPS vs UPS Pension Calculator &nbsp;·&nbsp; Independent Tool &nbsp;·&nbsp; For Central Govt Employees
+    </p>
+
+    <!-- thank you -->
+    <div style="
+      display:inline-block;
+      font-family:'Cormorant Garamond',Georgia,serif;
+      font-size:1.05rem;font-style:italic;font-weight:400;
+      color:rgba(255,255,255,.45);
+      border:1px solid rgba(201,147,42,.2);
+      border-radius:30px;padding:.35rem 1.4rem;
+      letter-spacing:.04em;
+    ">
+      🙏 &nbsp;Thanks for visiting
+    </div>
+
+    <!-- bottom line -->
+    <p style="
+      font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
+      color:rgba(255,255,255,.18);margin-top:1.4rem;font-family:'Lato',sans-serif;
+    ">
+      ⚠️ DISCLAIMER: This is an independent, unofficial tool — not affiliated with or endorsed by the Government of India, PFRDA, or any government body &nbsp;·&nbsp; All results are estimates only &nbsp;·&nbsp; Consult your PAO or a certified financial advisor for official figures &nbsp;·&nbsp; Free to use &nbsp;·&nbsp; Share freely
+    </p>
+  </div>
+</footer>
 
 </body>
 </html>
