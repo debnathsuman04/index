@@ -1284,8 +1284,7 @@ function calculate(){
 
   var lastRow=salRows[salRows.length-1];
   var lastBasic=lastRow.basic,lastDA=lastRow.da,lastGross=lastRow.gross;
-  var avg12=last12.reduce(function(a,b){return a+b;},0)/last12.length;
-
+  var avg12=last12.reduce(function(a,b){return a+b;},0)/Math.max(last12.length,1);
   /* NPS */
   var npsLS=npsCorpus*lumPct,npsAC=npsCorpus*(1-lumPct);
   var npsPm=(npsAC*annRate)/12;
