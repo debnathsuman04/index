@@ -1254,15 +1254,22 @@ function calculate(){
       var pcThis=null;
       for(j=0;j<activePCs.length;j++){if(activePCs[j].year===yr){pcThis=activePCs[j];break;}}
       if(pcThis){
-        var ob=basic;
-        basic=basic*pcThis.fitment;
-        da=0;
-        pcLog.push({name:pcThis.name,year:yr,fitment:pcThis.fitment,ob:ob,nb:basic});
-      } else {
-        basic=basic*(1+incrRate/100);
-        da=da+daGrowPP;
+  var ob=basic;
+
+  basic=basic*(1+incrRate/100);
+
+  basic=basic*pcThis.fitment;
+
+  da=0;
+
+  pcLog.push({
+    name:pcThis.name,
+    year:yr,
+    fitment:pcThis.fitment,
+    ob:ob,
+    nb:basic
+  });
       }
-    }
 
     var gross=basic*(1+da/100);
     var empM=gross*empC,govNM=gross*govtNPS,govUM=gross*govtUPS;
